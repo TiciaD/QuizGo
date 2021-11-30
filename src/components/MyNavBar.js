@@ -9,7 +9,7 @@ import "./MyNavBar.css";
 function MyNavBar() {
   return (
     <div>
-      <Navbar bg="light" variant="light" fixed="bottom">
+      <Navbar bg="white" variant="light" fixed="bottom" className="p-3">
         <Container className="justify-content-evenly">
           <Row>
             <Col>
