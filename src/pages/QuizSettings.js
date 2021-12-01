@@ -9,7 +9,7 @@ import {
   ToggleButton,
 } from "react-bootstrap";
 import { AnonCategories } from "../components";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./QuizSettings.css";
 
 export default function QuizSettings(props) {
