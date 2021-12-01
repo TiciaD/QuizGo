@@ -1,13 +1,14 @@
 import React from "react";
 import { Button, Card, Container, Row, Col } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import "./Home.css";
 
 function Home() {
   return (
-    <div>
+    <div className="Home-page">
       <Container>
         <Row>
-          <Col className="my-title my-5">QuizGo</Col>
+          <Col className="my-title mb-5">QuizGo</Col>
         </Row>
       </Container>
       <Container>
@@ -19,6 +20,8 @@ function Home() {
                   className="fw-bold border-3 rounded-pill fs-1 px-5"
                   variant="outline-primary"
                   size="lg"
+                  as={Link}
+                  to="quizsettings/"
                 >
                   QuickPlay
                 </Button>
@@ -28,6 +31,8 @@ function Home() {
                   className="fw-bold border-3 rounded-pill fs-1 px-5"
                   variant="outline-primary"
                   size="lg"
+                  as={Link}
+                  to="/register"
                 >
                   SignUp
                 </Button>

@@ -9,9 +9,10 @@ import {
   ToggleButton,
 } from "react-bootstrap";
 import { AnonCategories } from "../components";
+import { Link, useNavigate } from "react-router-dom";
 import "./QuizSettings.css";
 
-export default function QuizSettings() {
+export default function QuizSettings(props) {
   // Model
   // track which button has been selected
   const [checkedItem, setChecked] = useState("");
@@ -22,17 +23,21 @@ export default function QuizSettings() {
   // set state of error message
   const [error, setError] = useState("");
 
+  const navigate = useNavigate();
+
   const handleSubmit = () => {
     if (!category || !difficulty) {
       setError(true);
     } else {
       setError(false);
+      props.fetchQuestions(category, difficulty);
+      navigate("/quiz");
     }
   };
 
   return (
     // View
-    <div>
+    <div className="Settings-page">
       <Container>
         <Row>
           <Col className="my-title my-5">QuizGo</Col>
@@ -40,14 +45,19 @@ export default function QuizSettings() {
       </Container>
       <Container className="mb-5">
         <Row className="justify-content-center mx-auto">
-          <Col md={8}>
-            <Card className="intro-card rounded-0 d-flex justify-content-center align-items-center">
+          <Col md={10}>
+            <Card className="intro-card rounded-0 d-flex justify-content-center align-items-center mb-3">
               <Card.Body>
                 <Card.Title className="text-primary fw-bold fs-1 pt-4">
                   Select Category
                 </Card.Title>
               </Card.Body>
-              <Col md={12} className="mb-2">
+              {error && (
+                <Col className="px-2 py-1 fs-4 rounded bg-danger text-white mb-2">
+                  Please Select a Category
+                </Col>
+              )}
+              <Col sm={12} className="mb-2">
                 <Form>
                   <Row className="px-5">
                     {/* loop through categories array for anonymous users */}
@@ -84,7 +94,7 @@ export default function QuizSettings() {
                     })}
                   </Row>
                   <Row className="justify-content-center align-items-center mt-2">
-                    <Col xs="auto" className="my-3">
+                    <Col xs="auto" className="my-2">
                       <Form.Label
                         className="me-sm-2"
                         htmlFor="inlineFormCustomSelect"
@@ -94,6 +104,7 @@ export default function QuizSettings() {
                       <Form.Select
                         className="me-sm-2 text-primary"
                         id="inlineFormCustomSelect"
+                        size="lg"
                         onChange={(e) => {
                           console.log(e.target.value);
                           setDifficulty(e.target.value);
@@ -107,11 +118,22 @@ export default function QuizSettings() {
                   </Row>
                 </Form>
               </Col>
+              <Col className="m-2">
+                <Button
+                  className="fw-bold border-3 rounded-pill fs-2 px-5"
+                  variant="outline-primary"
+                  size="lg"
+                  onClick={() => navigate("/register")}
+                >
+                  Unlock More Categories!
+                </Button>
+              </Col>
               <Col className="mb-5">
                 <Button
                   className="fw-bold border-3 rounded-pill fs-2 px-5"
                   variant="outline-primary"
                   size="lg"
+                  onClick={handleSubmit}
                 >
                   Start
                 </Button>
