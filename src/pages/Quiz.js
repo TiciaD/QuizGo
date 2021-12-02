@@ -6,6 +6,7 @@ import {
   Row,
   Col,
   ProgressBar,
+  Spinner,
 } from "react-bootstrap";
 import { Question } from "../components";
 import quizContext from "../utilities/quiz-context";
@@ -45,16 +46,22 @@ export default function Quiz() {
                   now={10}
                   label={"1/10"}
                 />
-                <Question
-                //   currQuestion={currQuestion}
-                //   setCurrQuestion={setCurrQuestion}
-                //   questions={questions}
-                //   options={options}
-                //   correct={questions[currQuestion]?.correct_answer}
-                //   score={score}
-                //   setScore={setScore}
-                //   setQuestions={setQuestions}
-                />
+                {questions ? (
+                  <Question
+                  //   currQuestion={currQuestion}
+                  //   setCurrQuestion={setCurrQuestion}
+                  //   questions={questions}
+                  //   options={options}
+                  //   correct={questions[currQuestion]?.correct_answer}
+                  //   score={score}
+                  //   setScore={setScore}
+                  //   setQuestions={setQuestions}
+                  />
+                ) : (
+                  <Spinner animation="border" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                  </Spinner>
+                )}
               </Card.Body>
             </Card>
           </Col>

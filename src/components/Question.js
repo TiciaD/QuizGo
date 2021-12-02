@@ -18,7 +18,7 @@ const Question = () => {
   return (
     <div>
       <h1 className="text-primary fw-bold fs-2 pt-4">
-        {console.log(questions)}
+        {console.log(questions[0])}
         {questions[currQuestion].question}
       </h1>
 

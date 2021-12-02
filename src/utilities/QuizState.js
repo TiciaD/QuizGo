@@ -14,7 +14,7 @@ import quizReducer from "./quiz-reducer";
 
 const QuizState = (props) => {
   const initialState = {
-    questions: [],
+    questions: "",
     score: 0,
     toggledItem: "",
     category: "",
@@ -22,6 +22,7 @@ const QuizState = (props) => {
     error: "",
     currQuestion: 0,
     options: "",
+    loading: false,
   };
   const [state, dispatch] = useReducer(quizReducer, initialState);
 
@@ -40,7 +41,7 @@ const QuizState = (props) => {
       }${difficulty && `&difficulty=${difficulty}`}&type=multiple`
     );
     setQuestions(data.results);
-    console.log(data);
+    console.log(data.results);
   };
 
   // set toggledItem
@@ -94,6 +95,7 @@ const QuizState = (props) => {
         setError,
         currQuestion: state.currQuestion,
         options: state.options,
+        loading: state.loading,
       }}
     >
       {props.children}

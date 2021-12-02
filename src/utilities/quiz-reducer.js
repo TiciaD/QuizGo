@@ -10,7 +10,7 @@ import {
 const quizReducer = (state, action) => {
   switch (action.type) {
     case ADD_QUESTIONS:
-      return { ...state, questions: [action.payload] };
+      return { ...state, questions: action.payload };
     case ADD_SCORE:
       return {};
     case TOGGLE_BUTTON:
