@@ -1,11 +1,12 @@
 .App {
   text-align: center;
-  background-color: rgba(20, 25, 51, 1);
-  min-height: 100vh;
+  background-color: rgba(20, 25, 51, 0.9);
+  min-height: calc(100vh - 72px);
   width: 100%;
   font-family: industry, sans-serif;
   font-weight: 700;
   font-style: normal;
+  margin-bottom: 72px;
 }
 
 .App-logo {

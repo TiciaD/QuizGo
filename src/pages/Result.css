@@ -9,7 +9,7 @@
   text-shadow: -8px 9px 0px rgba(0, 0, 0, 0.6);
 }
 
-.Home-page {
+.Result-page {
   height: calc(100vh - 72px);
   display: flex;
   flex-direction: column;

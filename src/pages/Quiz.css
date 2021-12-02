@@ -1,0 +1,10 @@
+.Quiz-page {
+  height: calc(100vh - 72px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.my-bar {
+  height: 20px;
+}
