@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import {
   Button,
   Card,
@@ -10,27 +10,40 @@ import {
 } from "react-bootstrap";
 import { AnonCategories } from "../components";
 import { useNavigate } from "react-router-dom";
+import quizContext from "../utilities/quiz-context";
 import "./QuizSettings.css";
 
 export default function QuizSettings(props) {
   // Model
   // track which button has been selected
-  const [checkedItem, setChecked] = useState("");
-  // track which category has been selected
-  const [category, setCategory] = useState("");
-  // track which difficulty has been selected
-  const [difficulty, setDifficulty] = useState("easy");
-  // set state of error message
-  const [error, setError] = useState("");
+  //   const [checkedItem, setChecked] = useState("");
+  //   // track which category has been selected
+  //   const [category, setCategory] = useState("");
+  //   // track which difficulty has been selected
+  //   const [difficulty, setDifficulty] = useState("easy");
+  //   // set state of error message
+  //   const [error, setError] = useState("");
 
   const navigate = useNavigate();
+
+  const {
+    category,
+    setCategory,
+    toggledItem,
+    setToggle,
+    difficulty,
+    setDifficulty,
+    error,
+    setError,
+    fetchQuestions,
+  } = useContext(quizContext);
 
   const handleSubmit = () => {
     if (!category || !difficulty) {
       setError(true);
     } else {
       setError(false);
-      props.fetchQuestions(category, difficulty);
+      fetchQuestions(category, difficulty);
       navigate("/quiz");
     }
   };
@@ -65,7 +78,7 @@ export default function QuizSettings(props) {
                       // checked value is initialized as false
                       var checked = false;
                       // if state matches id
-                      if (checkedItem === "toggle-check-" + i) {
+                      if (toggledItem === "toggle-check-" + i) {
                         // set checked value to true
                         checked = true;
                       }
@@ -80,9 +93,10 @@ export default function QuizSettings(props) {
                             checked={checked}
                             value={cat.value}
                             onChange={(e) => {
+                              console.log(toggledItem);
                               // when a user clicks on a category button:
                               // set checked state to match id of that button
-                              setChecked(e.target.id);
+                              setToggle(e.target.id);
                               // set category to value of button
                               setCategory(cat.value);
                             }}
