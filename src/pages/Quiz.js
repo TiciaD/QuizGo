@@ -42,6 +42,7 @@ export default function Quiz() {
               <Card.Body>
                 <ProgressBar
                   className="my-bar mx-5 mt-4"
+                  variant="primary"
                   now={current * 10}
                   label={`${current}/${totalQues}`}
                 />

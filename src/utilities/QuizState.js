@@ -95,11 +95,13 @@ const QuizState = (props) => {
     });
   };
 
+  // takes an array and shuffles order of elements in the array
   const handleShuffle = (answers) => {
     return answers.sort(() => Math.random() - 0.5);
   };
 
   return (
+    // Send down props to everything wrapped in QuizState
     <QuizContext.Provider
       value={{
         questions: state.questions,
