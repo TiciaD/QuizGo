@@ -1,17 +1,13 @@
-import { useState, useContext } from "react";
+import React from "react";
 import { Routes, Route } from "react-router-dom";
-import axios from "axios";
 import "./App.css";
-import { Home, Profile, QuizSettings, Register, Quiz } from "./pages";
+import { Home, Profile, QuizSettings, Register, Quiz, Result } from "./pages";
 import { MyNavBar } from "./components";
 import QuizState from "./utilities/QuizState";
-import quizContext from "./utilities/quiz-context";
 
 function App() {
   //   const [questions, setQuestions] = useState();
   //   const [score, setScore] = useState(0);
-
-  //   const { fetchQuestions } = useContext(quizContext);
 
   //   const fetchQuestions = async (category = "", difficulty = "") => {
   //     const { data } = await axios.get(
@@ -41,6 +37,7 @@ function App() {
               />
             }
           />
+          <Route path="result/*" element={<Result />} />
         </Routes>
         <MyNavBar />
       </QuizState>

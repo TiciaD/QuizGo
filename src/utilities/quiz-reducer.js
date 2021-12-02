@@ -6,6 +6,7 @@ import {
   ADD_QUESTIONS,
   ADD_SCORE,
   OPTIONS,
+  CURRENT_QUESTION,
 } from "./quiz-actions";
 
 const quizReducer = (state, action) => {
@@ -13,7 +14,7 @@ const quizReducer = (state, action) => {
     case ADD_QUESTIONS:
       return { ...state, questions: action.payload };
     case ADD_SCORE:
-      return {};
+      return { ...state, score: action.payload };
     case TOGGLE_BUTTON:
       return { ...state, toggledItem: action.payload };
     case CATEGORY:
@@ -24,6 +25,8 @@ const quizReducer = (state, action) => {
       return { ...state, error: action.payload };
     case OPTIONS:
       return { ...state, options: action.payload };
+    case CURRENT_QUESTION:
+      return { ...state, currQuestion: action.payload };
     default:
       return state;
   }

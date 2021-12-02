@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import {
-  Button,
   Card,
   Container,
   Row,
@@ -28,13 +27,12 @@ export default function Quiz() {
           ...questions[currQuestion]?.incorrect_answers,
         ])
     );
-  }, [questions]);
+  }, [questions, currQuestion]);
+
+  const current = currQuestion + 1;
+  const totalQues = questions.length;
 
   //   console.log(options);
-
-  //   const handleShuffle = (answers) => {
-  //     return answers.sort(() => Math.random() - 0.5);
-  //   };
   return (
     <div className="Quiz-page">
       <Container className="mb-5">
@@ -44,8 +42,8 @@ export default function Quiz() {
               <Card.Body>
                 <ProgressBar
                   className="my-bar mx-5 mt-4"
-                  now={10}
-                  label={"1/10"}
+                  now={current * 10}
+                  label={`${current}/${totalQues}`}
                 />
                 {questions ? (
                   <Question />

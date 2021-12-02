@@ -2,6 +2,7 @@ import React, { useReducer } from "react";
 import axios from "axios";
 import {
   ADD_QUESTIONS,
+  ADD_SCORE,
   TOGGLE_BUTTON,
   CATEGORY,
   DIFFICULTY,
@@ -44,6 +45,13 @@ const QuizState = (props) => {
     console.log(data.results);
   };
 
+  const setScore = (int) => {
+    dispatch({
+      type: ADD_SCORE,
+      payload: int,
+    });
+  };
+
   // set toggledItem
   const setToggle = (id) => {
     dispatch({
@@ -73,9 +81,10 @@ const QuizState = (props) => {
     });
   };
 
-  const setCurrentQuestion = () => {
+  const setCurrentQuestion = (int) => {
     dispatch({
       type: CURRENT_QUESTION,
+      payload: int,
     });
   };
 
@@ -95,6 +104,8 @@ const QuizState = (props) => {
       value={{
         questions: state.questions,
         setQuestions,
+        score: state.score,
+        setScore,
         fetchQuestions,
         toggledItem: state.toggledItem,
         setToggle,
@@ -105,6 +116,7 @@ const QuizState = (props) => {
         error: state.error,
         setError,
         currQuestion: state.currQuestion,
+        setCurrentQuestion,
         options: state.options,
         setOptions,
         handleShuffle,
