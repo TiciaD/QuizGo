@@ -5,6 +5,7 @@ import {
   ERROR,
   ADD_QUESTIONS,
   ADD_SCORE,
+  OPTIONS,
 } from "./quiz-actions";
 
 const quizReducer = (state, action) => {
@@ -21,6 +22,8 @@ const quizReducer = (state, action) => {
       return { ...state, difficulty: action.payload };
     case ERROR:
       return { ...state, error: action.payload };
+    case OPTIONS:
+      return { ...state, options: action.payload };
     default:
       return state;
   }

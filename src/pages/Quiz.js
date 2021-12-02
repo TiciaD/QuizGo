@@ -16,17 +16,18 @@ export default function Quiz() {
   //   const [options, setOptions] = useState("");
   //   const [currQuestion, setCurrQuestion] = useState(0);
 
-  const { questions } = useContext(quizContext);
+  const { questions, currQuestion, setOptions, handleShuffle } =
+    useContext(quizContext);
 
   useEffect(() => {
     console.log(questions);
-    //   setOptions(
-    //     questions &&
-    //       handleShuffle([
-    //         questions[currQuestion]?.correct_answer,
-    //         ...questions[currQuestion]?.incorrect_answers,
-    //       ])
-    //   );
+    setOptions(
+      questions &&
+        handleShuffle([
+          questions[currQuestion]?.correct_answer,
+          ...questions[currQuestion]?.incorrect_answers,
+        ])
+    );
   }, [questions]);
 
   //   console.log(options);
@@ -39,7 +40,7 @@ export default function Quiz() {
       <Container className="mb-5">
         <Row className="justify-content-center mx-auto">
           <Col md={10}>
-            <Card className="intro-card rounded-0 d-flex justify-content-center my-3">
+            <Card className="intro-card rounded-0 d-flex justify-content-center mt-3">
               <Card.Body>
                 <ProgressBar
                   className="my-bar mx-5 mt-4"
@@ -47,16 +48,7 @@ export default function Quiz() {
                   label={"1/10"}
                 />
                 {questions ? (
-                  <Question
-                  //   currQuestion={currQuestion}
-                  //   setCurrQuestion={setCurrQuestion}
-                  //   questions={questions}
-                  //   options={options}
-                  //   correct={questions[currQuestion]?.correct_answer}
-                  //   score={score}
-                  //   setScore={setScore}
-                  //   setQuestions={setQuestions}
-                  />
+                  <Question />
                 ) : (
                   <Spinner animation="border" role="status">
                     <span className="visually-hidden">Loading...</span>

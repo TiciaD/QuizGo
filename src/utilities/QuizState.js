@@ -79,6 +79,17 @@ const QuizState = (props) => {
     });
   };
 
+  const setOptions = (arr) => {
+    dispatch({
+      type: OPTIONS,
+      payload: arr,
+    });
+  };
+
+  const handleShuffle = (answers) => {
+    return answers.sort(() => Math.random() - 0.5);
+  };
+
   return (
     <QuizContext.Provider
       value={{
@@ -95,6 +106,8 @@ const QuizState = (props) => {
         setError,
         currQuestion: state.currQuestion,
         options: state.options,
+        setOptions,
+        handleShuffle,
         loading: state.loading,
       }}
     >
