@@ -7,6 +7,7 @@
   font-weight: 700;
   font-style: normal;
   margin-bottom: 72px;
+  overflow: auto;
 }
 
 .App-logo {

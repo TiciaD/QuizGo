@@ -14,4 +14,10 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  overflow: auto;
+}
+
+.result-container {
+  margin-top: 4rem;
+  margin-bottom: 3rem;
 }

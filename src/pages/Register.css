@@ -1,4 +1,4 @@
-.Quiz-page {
+.Register-page {
   height: calc(100vh - 72px);
   display: flex;
   flex-direction: column;
@@ -6,11 +6,7 @@
   overflow: auto;
 }
 
-.my-container {
-  margin-top: 4rem;
+.register-container {
+  margin-top: 2rem;
   margin-bottom: 3rem;
-}
-
-.my-bar {
-  height: 20px;
 }

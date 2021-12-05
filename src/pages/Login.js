@@ -11,8 +11,9 @@ import {
 } from "react-bootstrap";
 import "./Register.css";
 
-export default function Register() {
+function Login() {
   const navigate = useNavigate();
+
   return (
     <div className="Register-page">
       <Container className="register-container">
@@ -21,33 +22,11 @@ export default function Register() {
             <Card className="intro-card rounded-0 d-flex justify-content-center mt-2">
               <Card.Body>
                 <Card.Title className="text-primary fw-bold fs-1 pt-2">
-                  Sign Up!
+                  Login
                 </Card.Title>
                 <Container>
-                  <Form>
+                  <Form noValidate>
                     <Row className="flex-column justify-content-center align-items-center text-primary">
-                      <Form.Group
-                        as={Col}
-                        lg="6"
-                        controlId="validationCustomUsername"
-                        className="mb-3"
-                      >
-                        <Form.Label>Username</Form.Label>
-                        <InputGroup hasValidation>
-                          <InputGroup.Text id="inputGroupPrepend">
-                            @
-                          </InputGroup.Text>
-                          <Form.Control
-                            type="text"
-                            placeholder="Username"
-                            aria-describedby="inputGroupPrepend"
-                            required
-                          />
-                          <Form.Control.Feedback type="invalid">
-                            Please choose a username.
-                          </Form.Control.Feedback>
-                        </InputGroup>
-                      </Form.Group>
                       <Form.Group
                         as={Col}
                         lg="6"
@@ -81,23 +60,14 @@ export default function Register() {
                         </Form.Control.Feedback>
                       </Form.Group>
                     </Row>
-                    <Row className="justify-content-center align-items-center gy-2">
-                      <Col lg={8}>
+                    <Row className="justify-content-center align-items-center">
+                      <Col md={6}>
                         <Button
                           variant="outline-primary"
                           type="submit"
                           className="fw-bold border-3 rounded-pill fs-4 px-5"
                         >
                           Submit
-                        </Button>
-                      </Col>
-                      <Col lg={8}>
-                        <Button
-                          variant="outline-primary"
-                          className="fw-bold border-3 rounded-pill px-4"
-                          onClick={() => navigate("/login")}
-                        >
-                          Already Registered?
                         </Button>
                       </Col>
                     </Row>
@@ -111,3 +81,5 @@ export default function Register() {
     </div>
   );
 }
+
+export default Login;

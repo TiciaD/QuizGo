@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import {
   Button,
   Card,
@@ -13,17 +13,8 @@ import { useNavigate } from "react-router-dom";
 import quizContext from "../utilities/quiz-context";
 import "./QuizSettings.css";
 
-export default function QuizSettings(props) {
+export default function QuizSettings() {
   // Model
-  // track which button has been selected
-  //   const [checkedItem, setChecked] = useState("");
-  //   // track which category has been selected
-  //   const [category, setCategory] = useState("");
-  //   // track which difficulty has been selected
-  //   const [difficulty, setDifficulty] = useState("easy");
-  //   // set state of error message
-  //   const [error, setError] = useState("");
-
   const navigate = useNavigate();
 
   const {
@@ -38,6 +29,7 @@ export default function QuizSettings(props) {
     fetchQuestions,
   } = useContext(quizContext);
 
+  // Controller
   const handleSubmit = () => {
     if (!category || !difficulty) {
       setError(true);

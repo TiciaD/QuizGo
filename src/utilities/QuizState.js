@@ -37,9 +37,7 @@ const QuizState = (props) => {
 
   const fetchQuestions = async (category = "", difficulty = "") => {
     const { data } = await axios.get(
-      `https://opentdb.com/api.php?amount=10${
-        category && `&category=${category}`
-      }${difficulty && `&difficulty=${difficulty}`}&type=multiple`
+      `https://opentdb.com/api.php?amount=10&category=${category}&difficulty=${difficulty}&type=multiple&encode=base64`
     );
     setQuestions(data.results);
     console.log(data.results);

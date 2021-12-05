@@ -18,6 +18,11 @@ const Question = () => {
 
   const navigate = useNavigate();
 
+  const decode = (data) => {
+    return atob(data);
+  };
+
+  const question = questions[currQuestion].question;
   const correct = questions[currQuestion].correct_answer;
   const totalQues = questions.length - 1;
   const current = currQuestion + 1;
@@ -55,8 +60,8 @@ const Question = () => {
     <div>
       <h1 className="text-primary fw-bold fs-2 pt-4">
         {console.log(questions[currQuestion].correct_answer)}
-        {console.log(options)}
-        {questions[currQuestion].question}
+        {console.log(decode(question))}
+        {decode(question)}
       </h1>
       <Container className="mt-4">
         {selectError && (
@@ -86,7 +91,7 @@ const Question = () => {
                   //   onChange={(e) => setSelectedItem(e.currentTarget.checked)}
                   onClick={() => handleChecked(i)}
                 >
-                  {i}
+                  {decode(i)}
                   {console.log({ questionsArr: questions.length })}
                 </Button>
               </Col>

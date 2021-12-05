@@ -6,12 +6,12 @@ import "./Home.css";
 function Home() {
   return (
     <div className="Home-page">
-      <Container>
+      <Container className="mt-5">
         <Row>
           <Col className="my-title mb-5">QuizGo</Col>
         </Row>
       </Container>
-      <Container>
+      <Container className="mb-5">
         <Row className="justify-content-center mx-auto">
           <Col md={8}>
             <Card className="intro-card rounded-0 d-flex justify-content-center align-items-center">

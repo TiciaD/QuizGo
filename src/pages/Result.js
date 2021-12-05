@@ -7,6 +7,7 @@ import "./Result.css";
 const Result = () => {
   const { questions, score, setScore, setCurrentQuestion } =
     useContext(quizContext);
+
   const navigate = useNavigate();
 
   const handleReset = () => {
@@ -18,12 +19,12 @@ const Result = () => {
   return (
     <div>
       <div className="Result-page">
-        <Container className="mb-5">
+        <Container className="result-container mb-5">
           <Row className="justify-content-center mx-auto">
             <Col md={10}>
-              <Card className="intro-card rounded-0 d-flex justify-content-center mt-3">
+              <Card className="intro-card rounded-0 d-flex justify-content-center mt-3 text-primary">
                 <Card.Body>
-                  <Card.Title className="text-primary fw-bold fs-1 pt-4">
+                  <Card.Title className="fw-bold fs-1 pt-4">
                     Quiz Result
                   </Card.Title>
 
