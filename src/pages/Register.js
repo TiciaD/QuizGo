@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Container,
@@ -12,7 +12,62 @@ import {
 import "./Register.css";
 
 export default function Register() {
+  const [registerForm, setRegisterForm] = useState({});
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+
+  const setField = (field, value) => {
+    setRegisterForm({
+      ...registerForm,
+      [field]: value,
+    });
+    console.log(registerForm);
+    // Check and see if errors exist, and remove them from the error object:
+    if (!!errors[field])
+      setErrors({
+        ...errors,
+        [field]: null,
+      });
+  };
+
+  const findFormErrors = () => {
+    const { username, email, password } = registerForm;
+    const newErrors = {};
+
+    // username errors
+    if (!username || username === "")
+      newErrors.username = "username cannot be blank!";
+    else if (username.length > 30) newErrors.username = "username is too long!";
+    else if (username.length < 5) newErrors.username = "username is too short!";
+
+    // email errors
+    if (!email || email === "") newErrors.email = "email cannot be blank!";
+    else if (email.length > 40) newErrors.email = "email is too long!";
+    else if (!email.includes("@") || !email.includes(".com"))
+      newErrors.email = "email must include @ or .com!";
+
+    // password errors
+    if (!password || password === "")
+      newErrors.password = "password cannot be blank!";
+    else if (password.length > 40) newErrors.password = "password is too long!";
+    else if (password.length < 8) newErrors.password = "password is too short!";
+
+    return newErrors;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // get our new errors
+    const newErrors = findFormErrors();
+    // Conditional logic:
+    if (Object.keys(newErrors).length > 0) {
+      // We got errors!
+      setErrors(newErrors);
+    } else {
+      // No errors! Put any logic here for the form submission!
+      alert("Submission successful!");
+    }
+  };
   return (
     <div className="Register-page">
       <Container className="register-container">
@@ -24,7 +79,7 @@ export default function Register() {
                   Sign Up!
                 </Card.Title>
                 <Container>
-                  <Form>
+                  <Form noValidate validated={!errors} onSubmit={handleSubmit}>
                     <Row className="flex-column justify-content-center align-items-center text-primary">
                       <Form.Group
                         as={Col}
@@ -42,9 +97,13 @@ export default function Register() {
                             placeholder="Username"
                             aria-describedby="inputGroupPrepend"
                             required
+                            onChange={(e) =>
+                              setField("username", e.target.value)
+                            }
+                            isInvalid={!!errors.username}
                           />
                           <Form.Control.Feedback type="invalid">
-                            Please choose a username.
+                            {errors.username}
                           </Form.Control.Feedback>
                         </InputGroup>
                       </Form.Group>
@@ -59,9 +118,11 @@ export default function Register() {
                           required
                           type="email"
                           placeholder="Enter email"
+                          onChange={(e) => setField("email", e.target.value)}
+                          isInvalid={!!errors.email}
                         />
-                        <Form.Control.Feedback>
-                          Looks good!
+                        <Form.Control.Feedback type="invalid">
+                          {errors.email}
                         </Form.Control.Feedback>
                       </Form.Group>
                       <Form.Group
@@ -75,9 +136,11 @@ export default function Register() {
                           required
                           type="password"
                           placeholder="Enter Password"
+                          onChange={(e) => setField("password", e.target.value)}
+                          isInvalid={!!errors.password}
                         />
-                        <Form.Control.Feedback>
-                          Looks good!
+                        <Form.Control.Feedback type="invalid">
+                          {errors.password}
                         </Form.Control.Feedback>
                       </Form.Group>
                     </Row>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Container,
@@ -12,7 +12,56 @@ import {
 import "./Register.css";
 
 function Login() {
+  const [loginForm, setLoginForm] = useState({});
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+
+  const setField = (field, value) => {
+    setLoginForm({
+      ...loginForm,
+      [field]: value,
+    });
+    console.log(loginForm);
+    // Check and see if errors exist, and remove them from the error object:
+    if (!!errors[field])
+      setErrors({
+        ...errors,
+        [field]: null,
+      });
+  };
+
+  const findFormErrors = () => {
+    const { email, password } = loginForm;
+    const newErrors = {};
+
+    // email errors
+    if (!email || email === "") newErrors.email = "email cannot be blank!";
+    else if (email.length > 40) newErrors.email = "email is too long!";
+    else if (!email.includes("@") || !email.includes(".com"))
+      newErrors.email = "email must include @ or .com!";
+
+    // password errors
+    if (!password || password === "")
+      newErrors.password = "password cannot be blank!";
+    else if (password.length > 40) newErrors.password = "password is too long!";
+    else if (password.length < 8) newErrors.password = "password is too short!";
+
+    return newErrors;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // get our new errors
+    const newErrors = findFormErrors();
+    // Conditional logic:
+    if (Object.keys(newErrors).length > 0) {
+      // We got errors!
+      setErrors(newErrors);
+    } else {
+      // No errors! Put any logic here for the form submission!
+      alert("Submission successful!");
+    }
+  };
 
   return (
     <div className="Register-page">
@@ -25,7 +74,7 @@ function Login() {
                   Login
                 </Card.Title>
                 <Container>
-                  <Form noValidate>
+                  <Form noValidate validated={!errors} onSubmit={handleSubmit}>
                     <Row className="flex-column justify-content-center align-items-center text-primary">
                       <Form.Group
                         as={Col}
@@ -38,9 +87,11 @@ function Login() {
                           required
                           type="email"
                           placeholder="Enter email"
+                          onChange={(e) => setField("email", e.target.value)}
+                          isInvalid={!!errors.email}
                         />
-                        <Form.Control.Feedback>
-                          Looks good!
+                        <Form.Control.Feedback type="invalid">
+                          {errors.email}
                         </Form.Control.Feedback>
                       </Form.Group>
                       <Form.Group
@@ -54,9 +105,11 @@ function Login() {
                           required
                           type="password"
                           placeholder="Enter Password"
+                          onChange={(e) => setField("password", e.target.value)}
+                          isInvalid={!!errors.password}
                         />
-                        <Form.Control.Feedback>
-                          Looks good!
+                        <Form.Control.Feedback type="invalid">
+                          {errors.password}
                         </Form.Control.Feedback>
                       </Form.Group>
                     </Row>

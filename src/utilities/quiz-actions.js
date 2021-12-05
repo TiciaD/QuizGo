@@ -1,4 +1,5 @@
 export const ADD_QUESTIONS = "ADD_QUESTIONS";
+export const AUTHORIZE = "AUTHORIZE";
 export const ADD_SCORE = "ADD_SCORE";
 export const TOGGLE_BUTTON = "TOGGLE_BUTTON";
 export const CATEGORY = "CATEGORY";

@@ -1,5 +1,6 @@
 import {
   TOGGLE_BUTTON,
+  AUTHORIZE,
   CATEGORY,
   DIFFICULTY,
   ERROR,
@@ -13,6 +14,8 @@ const quizReducer = (state, action) => {
   switch (action.type) {
     case ADD_QUESTIONS:
       return { ...state, questions: action.payload };
+    case AUTHORIZE:
+      return { ...state, isAuth: action.payload };
     case ADD_SCORE:
       return { ...state, score: action.payload };
     case TOGGLE_BUTTON:

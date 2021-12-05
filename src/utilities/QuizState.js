@@ -2,6 +2,7 @@ import React, { useReducer } from "react";
 import axios from "axios";
 import {
   ADD_QUESTIONS,
+  AUTHORIZE,
   ADD_SCORE,
   TOGGLE_BUTTON,
   CATEGORY,
@@ -15,6 +16,7 @@ import quizReducer from "./quiz-reducer";
 
 const QuizState = (props) => {
   const initialState = {
+    isAuth: false,
     questions: "",
     score: 0,
     toggledItem: "",
@@ -32,6 +34,13 @@ const QuizState = (props) => {
     dispatch({
       type: ADD_QUESTIONS,
       payload: res,
+    });
+  };
+
+  const setAuth = (bool) => {
+    dispatch({
+      type: AUTHORIZE,
+      payload: bool,
     });
   };
 
@@ -103,6 +112,8 @@ const QuizState = (props) => {
     <QuizContext.Provider
       value={{
         questions: state.questions,
+        isAuth: state.isAuth,
+        setAuth,
         setQuestions,
         score: state.score,
         setScore,
