@@ -2,26 +2,28 @@ import React, { useReducer } from "react";
 import axios from "axios";
 import {
   ADD_QUESTIONS,
-  AUTHORIZE,
   ADD_SCORE,
   TOGGLE_BUTTON,
   CATEGORY,
   DIFFICULTY,
+  TYPE,
+  AMOUNT,
   ERROR,
   OPTIONS,
   CURRENT_QUESTION,
-} from "./quiz-actions";
+} from "./actions";
 import QuizContext from "./quiz-context";
 import quizReducer from "./quiz-reducer";
 
 const QuizState = (props) => {
   const initialState = {
-    isAuth: false,
     questions: "",
     score: 0,
     toggledItem: "",
     category: "",
     difficulty: "easy",
+    type: "multiple",
+    amount: 5,
     error: "",
     currQuestion: 0,
     options: "",
@@ -37,19 +39,18 @@ const QuizState = (props) => {
     });
   };
 
-  const setAuth = (bool) => {
-    dispatch({
-      type: AUTHORIZE,
-      payload: bool,
-    });
-  };
-
-  const fetchQuestions = async (category = "", difficulty = "") => {
-    const { data } = await axios.get(
-      `https://opentdb.com/api.php?amount=10&category=${category}&difficulty=${difficulty}&type=multiple&encode=base64`
-    );
-    setQuestions(data.results);
-    console.log(data.results);
+  const fetchQuestions = async (category, difficulty, amount, type) => {
+    const res = await axios
+      .get(
+        `https://opentdb.com/api.php?amount=${amount}&category=${category}&difficulty=${difficulty}&type=${type}&encode=base64`
+      )
+      .then(function (res) {
+        setQuestions(res.data.results);
+        console.log({ Result: res.data.results });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   const setScore = (int) => {
@@ -77,6 +78,20 @@ const QuizState = (props) => {
   const setDifficulty = (value) => {
     dispatch({
       type: DIFFICULTY,
+      payload: value,
+    });
+  };
+
+  const setType = (value) => {
+    dispatch({
+      type: TYPE,
+      payload: value,
+    });
+  };
+
+  const setAmount = (value) => {
+    dispatch({
+      type: AMOUNT,
       payload: value,
     });
   };
@@ -112,8 +127,6 @@ const QuizState = (props) => {
     <QuizContext.Provider
       value={{
         questions: state.questions,
-        isAuth: state.isAuth,
-        setAuth,
         setQuestions,
         score: state.score,
         setScore,
@@ -124,6 +137,10 @@ const QuizState = (props) => {
         setCategory,
         difficulty: state.difficulty,
         setDifficulty,
+        type: state.type,
+        setType,
+        amount: state.amount,
+        setAmount,
         error: state.error,
         setError,
         currQuestion: state.currQuestion,

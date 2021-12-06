@@ -3,12 +3,14 @@ import {
   AUTHORIZE,
   CATEGORY,
   DIFFICULTY,
+  TYPE,
+  AMOUNT,
   ERROR,
   ADD_QUESTIONS,
   ADD_SCORE,
   OPTIONS,
   CURRENT_QUESTION,
-} from "./quiz-actions";
+} from "./actions";
 
 const quizReducer = (state, action) => {
   switch (action.type) {
@@ -30,6 +32,10 @@ const quizReducer = (state, action) => {
       return { ...state, options: action.payload };
     case CURRENT_QUESTION:
       return { ...state, currQuestion: action.payload };
+    case TYPE:
+      return { ...state, type: action.payload };
+    case AMOUNT:
+      return { ...state, amount: action.payload };
     default:
       return state;
   }

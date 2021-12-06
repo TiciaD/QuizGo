@@ -24,12 +24,11 @@ export default function Quiz() {
           ...questions[currQuestion]?.incorrect_answers,
         ])
     );
-  }, [questions, currQuestion]);
+  }, [questions, currQuestion]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const current = currQuestion + 1;
   const totalQues = questions ? questions.length : null;
 
-  //   console.log(options);
   return (
     <div className="Quiz-page">
       <Container className="my-container">
@@ -42,7 +41,7 @@ export default function Quiz() {
                     <ProgressBar
                       className="my-bar mx-5 mt-4"
                       variant="primary"
-                      now={current * 10}
+                      now={current * (100 / totalQues)}
                       label={`${current}/${totalQues}`}
                     />
 
