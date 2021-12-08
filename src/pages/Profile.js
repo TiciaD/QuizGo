@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { Button, Card, Container, Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import authContext from "../utilities/auth-context";
@@ -65,28 +65,30 @@ export default function Profile() {
               )}
             </Card>
           </Col>
-          <Col md={10} className="mt-5">
-            <Card className="profile-card rounded-0 d-flex justify-content-center mt-3 text-primary">
-              <Card.Body>
-                <Card.Title className="fw-bold fs-1 pt-4 mb-3">
-                  Your Quizzes
-                </Card.Title>
-                <Col className="m-2 py-3 text-muted fs-3 mb-3">
-                  No saved quizzes
-                </Col>
-                <Col className="m-2">
-                  <Button
-                    className="fw-bold border-3 rounded-pill fs-2 px-5 mb-3"
-                    variant="outline-primary"
-                    size="lg"
-                    onClick={() => navigate("/quizform")}
-                  >
-                    Create a Quiz
-                  </Button>
-                </Col>
-              </Card.Body>
-            </Card>
-          </Col>
+          {token && (
+            <Col md={10} className="mt-5">
+              <Card className="profile-card rounded-0 d-flex justify-content-center mt-3 text-primary">
+                <Card.Body>
+                  <Card.Title className="fw-bold fs-1 pt-4 mb-3">
+                    Your Quizzes
+                  </Card.Title>
+                  <Col className="m-2 py-3 text-muted fs-3 mb-3">
+                    No saved quizzes
+                  </Col>
+                  <Col className="m-2">
+                    <Button
+                      className="fw-bold border-3 rounded-pill fs-2 px-5 mb-3"
+                      variant="outline-primary"
+                      size="lg"
+                      onClick={() => navigate("/quizform")}
+                    >
+                      Create a Quiz
+                    </Button>
+                  </Col>
+                </Card.Body>
+              </Card>
+            </Col>
+          )}
         </Row>
       </Container>
     </div>

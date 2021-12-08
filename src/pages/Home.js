@@ -4,19 +4,27 @@ import quizContext from "../utilities/quiz-context";
 import authContext from "../utilities/auth-context";
 import { Link } from "react-router-dom";
 import "./Home.css";
-import axios from "axios";
 
 function Home() {
-  const { setQuestions, setScore, setCurrentQuestion } =
-    useContext(quizContext);
+  const {
+    setQuestions,
+    setScore,
+    setCurrentQuestion,
+    setAmount,
+    setDifficulty,
+    setType,
+  } = useContext(quizContext);
 
-  const { token, setToken, getUserData, userData } = useContext(authContext);
+  const { token, getUserData, userData } = useContext(authContext);
 
   useEffect(() => {
     getUserData();
     setQuestions("");
     setCurrentQuestion(0);
     setScore(0);
+    setAmount(5);
+    setDifficulty("easy");
+    setType("multiple");
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (

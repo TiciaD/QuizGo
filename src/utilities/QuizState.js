@@ -39,8 +39,9 @@ const QuizState = (props) => {
     });
   };
 
+  // fetch quiz questions from opentdb based on state of category, difficulty, type, and amount of questions
   const fetchQuestions = async (category, difficulty, amount, type) => {
-    const res = await axios
+    await axios
       .get(
         `https://opentdb.com/api.php?amount=${amount}&category=${category}&difficulty=${difficulty}&type=${type}&encode=base64`
       )

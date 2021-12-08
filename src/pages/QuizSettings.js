@@ -173,47 +173,51 @@ export default function QuizSettings() {
                         <option value="hard">Hard</option>
                       </Form.Select>
                     </Col>
-                    <Col xs={10} md={4} className="my-2">
-                      <Form.Label
-                        className="me-sm-2"
-                        htmlFor="inlineFormCustomSelect"
-                      >
-                        Select Type
-                      </Form.Label>
-                      <Form.Select
-                        className="me-sm-2 text-primary"
-                        id="inlineFormCustomSelectType"
-                        size="lg"
-                        onChange={(e) => {
-                          console.log(e.target.value);
-                          setType(e.target.value);
-                        }}
-                      >
-                        <option value="multiple">Multiple Choice</option>
-                        <option value="boolean">True/False</option>
-                      </Form.Select>
-                    </Col>
-                    <Col xs={10} md={4} className="my-2">
-                      <Form.Label
-                        className="me-sm-2"
-                        htmlFor="inlineFormCustomSelect"
-                      >
-                        Select Amount
-                      </Form.Label>
-                      <Form.Select
-                        className="me-sm-2 text-primary"
-                        id="inlineFormCustomSelectAmount"
-                        size="lg"
-                        onChange={(e) => {
-                          console.log(e.target.value);
-                          setAmount(e.target.value);
-                        }}
-                      >
-                        <option value="5">5</option>
-                        <option value="10">10</option>
-                        <option value="15">15</option>
-                      </Form.Select>
-                    </Col>
+                    {token && (
+                      <>
+                        <Col xs={10} md={4} className="my-2">
+                          <Form.Label
+                            className="me-sm-2"
+                            htmlFor="inlineFormCustomSelect"
+                          >
+                            Select Type
+                          </Form.Label>
+                          <Form.Select
+                            className="me-sm-2 text-primary"
+                            id="inlineFormCustomSelectType"
+                            size="lg"
+                            onChange={(e) => {
+                              console.log(e.target.value);
+                              setType(e.target.value);
+                            }}
+                          >
+                            <option value="multiple">Multiple Choice</option>
+                            <option value="boolean">True/False</option>
+                          </Form.Select>
+                        </Col>
+                        <Col xs={10} md={4} className="my-2">
+                          <Form.Label
+                            className="me-sm-2"
+                            htmlFor="inlineFormCustomSelect"
+                          >
+                            Select Amount
+                          </Form.Label>
+                          <Form.Select
+                            className="me-sm-2 text-primary"
+                            id="inlineFormCustomSelectAmount"
+                            size="lg"
+                            onChange={(e) => {
+                              console.log(e.target.value);
+                              setAmount(e.target.value);
+                            }}
+                          >
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                          </Form.Select>
+                        </Col>
+                      </>
+                    )}
                   </Row>
                 </Form>
               </Col>

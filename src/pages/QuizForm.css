@@ -1,0 +1,23 @@
+.intro-card {
+  box-shadow: -10px 11px 0px rgba(0, 0, 0, 0.5);
+  min-height: 380px;
+}
+
+.my-title {
+  color: white;
+  font-size: 4rem;
+  text-shadow: -8px 9px 0px rgba(0, 0, 0, 0.6);
+}
+
+.Form-page {
+  /* height: calc(100vh - 72px); */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: auto;
+}
+
+.form-container {
+  margin-top: 5rem;
+  margin-bottom: 3rem;
+}

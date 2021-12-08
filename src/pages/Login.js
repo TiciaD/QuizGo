@@ -17,7 +17,7 @@ function Login() {
       password: pass,
       grant_type: "password",
       client_id: 2,
-      client_secret: "2V5W1rVqSAOG7mn6s0wQTUxpRMawBVuEDwKtEleI",
+      client_secret: "7poMFtADYtcSsvMkCPZL4ePcqKHBFRyEuq7thD0m",
       scope: "",
     };
     login(data);
@@ -31,7 +31,7 @@ function Login() {
       setAuth(true);
       navigate("/");
     }
-  }, [token]);
+  }, [token]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const navigate = useNavigate();
 

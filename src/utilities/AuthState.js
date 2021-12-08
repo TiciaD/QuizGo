@@ -33,7 +33,6 @@ const AuthState = (props) => {
 
   const saveToken = (res) => {
     const newToken = res.data.access_token || res.data.data.token;
-    console.log({ response: res });
     console.log({ token: newToken });
     setToken(newToken);
     window.localStorage.setItem("token", newToken);
@@ -63,7 +62,7 @@ const AuthState = (props) => {
           }
         )
         .then(function (response) {
-          console.log(response.data.data.user_data);
+          //   console.log(response.data.data.user_data);
           setUserData(response.data.data.user_data);
         })
         .catch(function (error) {
