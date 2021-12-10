@@ -4,6 +4,7 @@ import {
   ADD_CORRECT,
   ADD_USER_CAT,
   ADD_USER_DIF,
+  ADD_ALL_QUES,
 } from "./actions";
 
 const userQuizReducer = (state, action) => {
@@ -17,11 +18,14 @@ const userQuizReducer = (state, action) => {
     case ADD_USER_OPTIONS:
       return { ...state, userOptions: action.payload };
     case ADD_USER_CAT:
-      return { ...state, userData: action.payload };
-    case ADD_USER_DIF:
-      return { ...state, userData: action.payload };
+      return { ...state, userCategory: action.payload };
+    case ADD_ALL_QUES:
+      return {
+        ...state,
+        allQuestions: [...state.allQuestions, action.payload],
+      };
     case ADD_CORRECT:
-      return { ...state, userOptions: action.payload };
+      return { ...state, correct: action.payload };
     default:
       return state;
   }

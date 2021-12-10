@@ -21,3 +21,4 @@ export const ADD_USER_OPTIONS = "ADD_USER_OPTIONS";
 export const ADD_CORRECT = "ADD_CORRECT";
 export const ADD_USER_CAT = "ADD_USER_CAT";
 export const ADD_USER_DIF = "ADD_USER_DIF";
+export const ADD_ALL_QUES = "ADD_ALL_QUES";

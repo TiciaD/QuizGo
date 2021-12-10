@@ -1,18 +1,36 @@
-import React, { useContext } from "react";
-import { Container, Row, Col, Card, Form, Button } from "react-bootstrap";
+import React, { useContext, useState } from "react";
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  Form,
+  Button,
+  FloatingLabel,
+} from "react-bootstrap";
 import { Categories } from "../components";
 import userQuizContext from "../utilities/user-quiz-context";
+import authContext from "../utilities/auth-context";
 import "./QuizForm.css";
 
 export default function QuizForm() {
   const {
+    allQuestions,
+    setAllQuestions,
     userQuestions,
     setUserQuestions,
     userOptions,
     setUserOptions,
     setUserCategory,
     setUserDifficulty,
+    userDifficulty,
+    userCategory,
+    makeQuiz,
   } = useContext(userQuizContext);
+
+  const [name, setName] = useState("Quiz");
+
+  const { token } = useContext(authContext);
 
   const setField = (field, value) => {
     setUserQuestions({
@@ -34,16 +52,27 @@ export default function QuizForm() {
     setUserOptions(allOptions);
     console.log(userOptions);
 
+    setAllQuestions(userQuestions);
+    console.log({ QuestionsArr: allQuestions });
+
     // clear question field
     Array.from(document.querySelectorAll("input")).forEach(
       (input) => (input.value = "")
     );
 
+    // axios POST, send question to database
+    console.log(userQuestions);
+
     // reset user questions state
     setUserQuestions("");
     console.log(userQuestions);
+  };
 
-    // axios POST, send question to database
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(allQuestions);
+    let myToken = token;
+    makeQuiz(allQuestions, userDifficulty, userCategory, name, myToken);
   };
 
   return (
@@ -80,7 +109,7 @@ export default function QuizForm() {
                         >
                           {Categories.map((cat, i) => {
                             return (
-                              <option key={i} value={cat.value}>
+                              <option key={i} value={i + 1}>
                                 {cat.category}
                               </option>
                             );
@@ -102,32 +131,62 @@ export default function QuizForm() {
                             setUserDifficulty(e.target.value);
                           }}
                         >
-                          <option value="easy">Easy</option>
-                          <option value="medium">Medium</option>
-                          <option value="hard">Hard</option>
+                          <option value="1">Easy</option>
+                          <option value="2">Medium</option>
+                          <option value="3">Hard</option>
                         </Form.Select>
                       </Form.Group>
                     </Row>
                     <hr />
                     <Row>
-                      <Col>current questions: 0</Col>
+                      <Col>Total Questions: {allQuestions.length}</Col>
                     </Row>
-                    <Row className="justify-content-center p-2">
+                    <Row className="justify-content-center p-2 text-muted">
                       <Form.Group
                         as={Col}
                         lg="8"
                         controlId="validationCustomQuestion"
                         className="mb-3"
                       >
-                        <Form.Label>Question</Form.Label>
-                        <Form.Control
-                          required
-                          //   value={userQuestions}
-                          type="text"
-                          placeholder="Question 1"
-                          onChange={(e) => setField("question", e.target.value)}
-                          //   isInvalid={!!errors.email}
-                        />
+                        <FloatingLabel
+                          controlId="floatingInput"
+                          label="Quiz Name"
+                          className="mb-3"
+                        >
+                          <Form.Control
+                            required
+                            type="text"
+                            placeholder="Enter Question"
+                            onChange={(e) => setName("name", e.target.value)}
+                            //   isInvalid={!!errors.email}
+                          />
+                        </FloatingLabel>
+                        <Form.Control.Feedback type="invalid">
+                          {/* {errors.email} */}
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                      <Form.Group
+                        as={Col}
+                        lg="8"
+                        controlId="validationCustomQuestion"
+                        className="mb-3"
+                      >
+                        <FloatingLabel
+                          controlId="floatingInput"
+                          label="Question"
+                          className="mb-3"
+                        >
+                          <Form.Control
+                            required
+                            //   value={userQuestions}
+                            type="text"
+                            placeholder="Enter Question"
+                            onChange={(e) =>
+                              setField("question", e.target.value)
+                            }
+                            //   isInvalid={!!errors.email}
+                          />
+                        </FloatingLabel>
                         <Form.Control.Feedback type="invalid">
                           {/* {errors.email} */}
                         </Form.Control.Feedback>
@@ -138,16 +197,21 @@ export default function QuizForm() {
                         controlId="validationCustomCorAns"
                         className="mb-3"
                       >
-                        <Form.Label>Correct Answer</Form.Label>
-                        <Form.Control
-                          required
-                          type="text"
-                          placeholder="Correct Answer"
-                          onChange={(e) =>
-                            setField("correct_answer", e.target.value)
-                          }
-                          //   isInvalid={!!errors.email}
-                        />
+                        <FloatingLabel
+                          controlId="floatingInput"
+                          label="Correct Answer"
+                          className="mb-3"
+                        >
+                          <Form.Control
+                            required
+                            type="text"
+                            placeholder="Correct Answer"
+                            onChange={(e) =>
+                              setField("correct_answer", e.target.value)
+                            }
+                            //   isInvalid={!!errors.email}
+                          />
+                        </FloatingLabel>
                         <Form.Control.Feedback type="invalid">
                           {/* {errors.email} */}
                         </Form.Control.Feedback>
@@ -158,16 +222,21 @@ export default function QuizForm() {
                         controlId="validationCustomIncAns1"
                         className="mb-3"
                       >
-                        <Form.Label>Incorrect Answer 1</Form.Label>
-                        <Form.Control
-                          required
-                          type="text"
-                          placeholder="Incorrect Answer 1"
-                          onChange={(e) =>
-                            setField("possible_answer1", e.target.value)
-                          }
-                          //   isInvalid={!!errors.email}
-                        />
+                        <FloatingLabel
+                          controlId="floatingInput"
+                          label="Incorrect Answer 1"
+                          className="mb-3"
+                        >
+                          <Form.Control
+                            required
+                            type="text"
+                            placeholder="Incorrect Answer 1"
+                            onChange={(e) =>
+                              setField("possible_answer1", e.target.value)
+                            }
+                            //   isInvalid={!!errors.email}
+                          />
+                        </FloatingLabel>
                         <Form.Control.Feedback type="invalid">
                           {/* {errors.email} */}
                         </Form.Control.Feedback>
@@ -178,16 +247,21 @@ export default function QuizForm() {
                         controlId="validationCustomIncAns"
                         className="mb-3"
                       >
-                        <Form.Label>Incorrect Answer 2</Form.Label>
-                        <Form.Control
-                          required
-                          type="text"
-                          placeholder="Incorrect Answer 2"
-                          onChange={(e) =>
-                            setField("possible_answer2", e.target.value)
-                          }
-                          //   isInvalid={!!errors.email}
-                        />
+                        <FloatingLabel
+                          controlId="floatingInput"
+                          label="Incorrect Answer 2"
+                          className="mb-3"
+                        >
+                          <Form.Control
+                            required
+                            type="text"
+                            placeholder="Incorrect Answer 2"
+                            onChange={(e) =>
+                              setField("possible_answer2", e.target.value)
+                            }
+                            //   isInvalid={!!errors.email}
+                          />
+                        </FloatingLabel>
                         <Form.Control.Feedback type="invalid">
                           {/* {errors.email} */}
                         </Form.Control.Feedback>
@@ -198,16 +272,21 @@ export default function QuizForm() {
                         controlId="validationCustomIncAns"
                         className="mb-3"
                       >
-                        <Form.Label>Incorrect Answer 3</Form.Label>
-                        <Form.Control
-                          required
-                          type="text"
-                          placeholder="Incorrect Answer 3"
-                          onChange={(e) =>
-                            setField("possible_answer3", e.target.value)
-                          }
-                          //   isInvalid={!!errors.email}
-                        />
+                        <FloatingLabel
+                          controlId="floatingInput"
+                          label="Incorrect Answer 3"
+                          className="mb-3"
+                        >
+                          <Form.Control
+                            required
+                            type="text"
+                            placeholder="Incorrect Answer 3"
+                            onChange={(e) =>
+                              setField("possible_answer3", e.target.value)
+                            }
+                            //   isInvalid={!!errors.email}
+                          />
+                        </FloatingLabel>
                         <Form.Control.Feedback type="invalid">
                           {/* {errors.email} */}
                         </Form.Control.Feedback>
@@ -228,6 +307,7 @@ export default function QuizForm() {
                           variant="outline-primary"
                           type="submit"
                           className="fw-bold border-3 rounded-pill fs-4 px-5"
+                          onClick={handleSubmit}
                         >
                           Submit Quiz
                         </Button>
