@@ -5,8 +5,12 @@ import authContext from "../utilities/auth-context";
 import "./Profile.css";
 
 export default function Profile() {
-  const { token, userData } = useContext(authContext);
+  const { token, userData, destroyToken } = useContext(authContext);
   const navigate = useNavigate();
+  const handleLogout = () => {
+    destroyToken();
+    navigate("/login");
+  };
 
   return (
     <div className="Profile-page">
@@ -57,6 +61,7 @@ export default function Profile() {
                       className="fw-bold text-danger fs-4"
                       variant="link"
                       size="lg"
+                      onClick={handleLogout}
                     >
                       Logout
                     </Button>

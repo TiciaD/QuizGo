@@ -38,6 +38,11 @@ const AuthState = (props) => {
     window.localStorage.setItem("token", newToken);
   };
 
+  const destroyToken = () => {
+    setToken("");
+    window.localStorage.removeItem("token");
+  };
+
   const login = (userData) => {
     axiosHelper({
       data: userData,
@@ -82,6 +87,7 @@ const AuthState = (props) => {
         setUserData,
         saveToken,
         login,
+        destroyToken,
         getUserData,
       }}
     >

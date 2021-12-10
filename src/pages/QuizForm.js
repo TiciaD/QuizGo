@@ -1,26 +1,59 @@
-import React from "react";
-import {
-  Container,
-  Row,
-  Col,
-  Card,
-  Form,
-  Button,
-  Accordion,
-} from "react-bootstrap";
+import React, { useContext } from "react";
+import { Container, Row, Col, Card, Form, Button } from "react-bootstrap";
 import { Categories } from "../components";
-import { QuestionForm } from "../components";
+import userQuizContext from "../utilities/user-quiz-context";
 import "./QuizForm.css";
 
 export default function QuizForm() {
+  const {
+    userQuestions,
+    setUserQuestions,
+    userOptions,
+    setUserOptions,
+    setUserCategory,
+    setUserDifficulty,
+  } = useContext(userQuizContext);
+
+  const setField = (field, value) => {
+    setUserQuestions({
+      ...userQuestions,
+      [field]: value,
+    });
+    console.log(userQuestions);
+    // Check and see if errors exist, and remove them from the error object:
+    // if (!!errors[field])
+    //   setErrors({
+    //     ...errors,
+    //     [field]: null,
+    //   });
+  };
+
+  const handleAddQuestion = () => {
+    // stringify all options
+    let allOptions = `${userQuestions.correct_answer}|${userQuestions.possible_answer1}|${userQuestions.possible_answer2}|${userQuestions.possible_answer3}`;
+    setUserOptions(allOptions);
+    console.log(userOptions);
+
+    // clear question field
+    Array.from(document.querySelectorAll("input")).forEach(
+      (input) => (input.value = "")
+    );
+
+    // reset user questions state
+    setUserQuestions("");
+    console.log(userQuestions);
+
+    // axios POST, send question to database
+  };
+
   return (
     <div className="Form-page">
       <Container className="form-container">
         <Row className="justify-content-center mx-auto">
           <Col md={10}>
             <Card className="intro-card rounded-0 d-flex justify-content-center">
-              <Card.Body>
-                <Card.Title className="text-primary fw-bold fs-1 pt-2">
+              <Card.Body className="mb-3">
+                <Card.Title className="text-primary fw-bold fs-1 pt-2 pb-3">
                   Quiz Creator
                 </Card.Title>
                 <Container>
@@ -29,8 +62,8 @@ export default function QuizForm() {
                     // validated={!errors}
                     // onSubmit={handleSubmit}
                   >
-                    <Row className="flex-column justify-content-center align-items-center text-primary">
-                      <Form.Group className="mb-4" as={Col} lg="8">
+                    <Row className="justify-content-center align-items-center text-primary">
+                      <Form.Group className="mb-4" as={Col} xs="10" md="4">
                         <Form.Label
                           className="me-sm-2 d-flex align-self-start"
                           htmlFor="inlineFormCustomSelectCategory"
@@ -40,6 +73,10 @@ export default function QuizForm() {
                         <Form.Select
                           className="me-sm-2"
                           id="inlineFormCustomSelectCategory"
+                          onChange={(e) => {
+                            console.log(e.target.value);
+                            setUserCategory(e.target.value);
+                          }}
                         >
                           {Categories.map((cat, i) => {
                             return (
@@ -50,8 +87,6 @@ export default function QuizForm() {
                           })}
                         </Form.Select>
                       </Form.Group>
-                    </Row>
-                    <Row className="justify-content-center align-items-center my-3 mx-2">
                       <Form.Group className="mb-4" as={Col} xs="10" md="4">
                         <Form.Label
                           className="me-sm-2 d-flex align-self-start"
@@ -62,103 +97,131 @@ export default function QuizForm() {
                         <Form.Select
                           className="me-sm-2 text-primary"
                           id="inlineFormCustomSelectDifficulty"
-                          // onChange={(e) => {
-                          //   console.log(e.target.value);
-                          //   setDifficulty(e.target.value);
-                          // }}
+                          onChange={(e) => {
+                            console.log(e.target.value);
+                            setUserDifficulty(e.target.value);
+                          }}
                         >
                           <option value="easy">Easy</option>
                           <option value="medium">Medium</option>
                           <option value="hard">Hard</option>
                         </Form.Select>
                       </Form.Group>
-                      <Form.Group className="mb-4" as={Col} xs="10" md="4">
-                        <Form.Label
-                          className="me-sm-2 d-flex align-self-start"
-                          htmlFor="inlineFormCustomSelectDifficulty"
-                        >
-                          Select Type
-                        </Form.Label>
-                        <Form.Select
-                          className="me-sm-2 text-primary"
-                          id="inlineFormCustomSelectType"
-                          // onChange={(e) => {
-                          //   console.log(e.target.value);
-                          //   setType(e.target.value);
-                          // }}
-                        >
-                          <option value="multiple">Multiple Choice</option>
-                          <option value="boolean">True/False</option>
-                        </Form.Select>
-                      </Form.Group>
-                      <Form.Group className="mb-4" as={Col} xs="10" md="4">
-                        <Form.Label
-                          className="me-sm-2 d-flex align-self-start"
-                          htmlFor="inlineFormCustomSelectDifficulty"
-                        >
-                          Select Amount
-                        </Form.Label>
-                        <Form.Select
-                          className="me-sm-2 text-primary"
-                          id="inlineFormCustomSelectAmount"
-                          // onChange={(e) => {
-                          //   console.log(e.target.value);
-                          //   setAmount(e.target.value);
-                          // }}
-                        >
-                          <option value="5">5</option>
-                          <option value="10">10</option>
-                          <option value="15">15</option>
-                        </Form.Select>
-                      </Form.Group>
                     </Row>
                     <hr />
-                    <Row className="flex-column justify-content-center align-items-center">
-                      <Col className="my-3">
-                        <Accordion defaultActiveKey="0">
-                          <Accordion.Item eventKey="0">
-                            <Accordion.Header className="fw-bold">
-                              Questions 1-5
-                            </Accordion.Header>
-                            <Accordion.Body>
-                              <QuestionForm num={1} />
-                              <QuestionForm num={2} />
-                              <QuestionForm num={3} />
-                              <QuestionForm num={4} />
-                              <QuestionForm num={5} />
-                            </Accordion.Body>
-                          </Accordion.Item>
-                          <Accordion.Item eventKey="1">
-                            <Accordion.Header>Questions 6-10</Accordion.Header>
-                            <Accordion.Body>
-                              Lorem ipsum dolor sit amet, consectetur adipiscing
-                              elit, sed do eiusmod tempor incididunt ut labore
-                              et dolore magna aliqua. Ut enim ad minim veniam,
-                              quis nostrud exercitation ullamco laboris nisi ut
-                              aliquip ex ea commodo consequat. Duis aute irure
-                              dolor in reprehenderit in voluptate velit esse
-                              cillum dolore eu fugiat nulla pariatur. Excepteur
-                              sint occaecat cupidatat non proident, sunt in
-                              culpa qui officia deserunt mollit anim id est
-                              laborum.
-                            </Accordion.Body>
-                          </Accordion.Item>
-                          <Accordion.Item eventKey="2">
-                            <Accordion.Header>Questions 11-15</Accordion.Header>
-                            <Accordion.Body>
-                              Lorem ipsum dolor sit amet, consectetur adipiscing
-                              elit, sed do eiusmod tempor incididunt ut labore
-                              et dolore magna aliqua. Ut enim ad minim veniam,
-                              quis nostrud exercitation ullamco laboris nisi ut
-                              aliquip ex ea commodo consequat. Duis aute irure
-                              dolor in reprehenderit in voluptate velit esse
-                              cillum dolore eu fugiat nulla pariatur. Excepteur
-                              sint occaecat cupidatat non proident, sunt in
-                              culpa qui officia deserunt mollit anim id est
-                              laborum.
-                            </Accordion.Body>
-                          </Accordion.Item>
-                        </Accordion>
+                    <Row>
+                      <Col>current questions: 0</Col>
+                    </Row>
+                    <Row className="justify-content-center p-2">
+                      <Form.Group
+                        as={Col}
+                        lg="8"
+                        controlId="validationCustomQuestion"
+                        className="mb-3"
+                      >
+                        <Form.Label>Question</Form.Label>
+                        <Form.Control
+                          required
+                          //   value={userQuestions}
+                          type="text"
+                          placeholder="Question 1"
+                          onChange={(e) => setField("question", e.target.value)}
+                          //   isInvalid={!!errors.email}
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          {/* {errors.email} */}
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                      <Form.Group
+                        as={Col}
+                        lg="8"
+                        controlId="validationCustomCorAns"
+                        className="mb-3"
+                      >
+                        <Form.Label>Correct Answer</Form.Label>
+                        <Form.Control
+                          required
+                          type="text"
+                          placeholder="Correct Answer"
+                          onChange={(e) =>
+                            setField("correct_answer", e.target.value)
+                          }
+                          //   isInvalid={!!errors.email}
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          {/* {errors.email} */}
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                      <Form.Group
+                        as={Col}
+                        lg="8"
+                        controlId="validationCustomIncAns1"
+                        className="mb-3"
+                      >
+                        <Form.Label>Incorrect Answer 1</Form.Label>
+                        <Form.Control
+                          required
+                          type="text"
+                          placeholder="Incorrect Answer 1"
+                          onChange={(e) =>
+                            setField("possible_answer1", e.target.value)
+                          }
+                          //   isInvalid={!!errors.email}
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          {/* {errors.email} */}
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                      <Form.Group
+                        as={Col}
+                        lg="8"
+                        controlId="validationCustomIncAns"
+                        className="mb-3"
+                      >
+                        <Form.Label>Incorrect Answer 2</Form.Label>
+                        <Form.Control
+                          required
+                          type="text"
+                          placeholder="Incorrect Answer 2"
+                          onChange={(e) =>
+                            setField("possible_answer2", e.target.value)
+                          }
+                          //   isInvalid={!!errors.email}
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          {/* {errors.email} */}
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                      <Form.Group
+                        as={Col}
+                        lg="8"
+                        controlId="validationCustomIncAns"
+                        className="mb-3"
+                      >
+                        <Form.Label>Incorrect Answer 3</Form.Label>
+                        <Form.Control
+                          required
+                          type="text"
+                          placeholder="Incorrect Answer 3"
+                          onChange={(e) =>
+                            setField("possible_answer3", e.target.value)
+                          }
+                          //   isInvalid={!!errors.email}
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          {/* {errors.email} */}
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                    </Row>
+                    <Row className="d-flex flex-column align-items-center">
+                      <Col md={6}>
+                        <Button
+                          variant="outline-primary"
+                          className="fw-bold border-3 rounded-pill fs-5 px-3 mb-4"
+                          onClick={handleAddQuestion}
+                        >
+                          Add Question
+                        </Button>
                       </Col>
                       <Col md={6}>
                         <Button
@@ -166,7 +229,7 @@ export default function QuizForm() {
                           type="submit"
                           className="fw-bold border-3 rounded-pill fs-4 px-5"
                         >
-                          Submit
+                          Submit Quiz
                         </Button>
                       </Col>
                     </Row>

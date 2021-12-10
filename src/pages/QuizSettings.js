@@ -154,7 +154,7 @@ export default function QuizSettings() {
                   <Row className="justify-content-center align-items-center my-3 mx-3">
                     <Col xs={10} md={4} className="my-2">
                       <Form.Label
-                        className="me-sm-2"
+                        className="me-sm-2 text-primary"
                         htmlFor="inlineFormCustomSelect"
                       >
                         Select Difficulty
