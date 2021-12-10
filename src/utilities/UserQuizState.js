@@ -61,7 +61,8 @@ const UserQuizState = (props) => {
   };
 
   const saveQuiz = (res) => {
-    console.log({ response: res });
+    console.log({ response: res.config.data });
+    console.log({ JSONresponse: JSON.parse(res.config.data) });
   };
   const sendQuiz = (userData, token) => {
     axiosHelper({
