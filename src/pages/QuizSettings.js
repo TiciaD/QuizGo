@@ -13,7 +13,6 @@ import { Categories } from "../components";
 import { useNavigate } from "react-router-dom";
 import quizContext from "../utilities/quiz-context";
 import authContext from "../utilities/auth-context";
-import "./QuizSettings.css";
 
 export default function QuizSettings() {
   // Model

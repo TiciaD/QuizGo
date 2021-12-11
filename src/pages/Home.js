@@ -85,7 +85,7 @@ function Home() {
                       variant="outline-primary"
                       size="lg"
                       as={Link}
-                      to="quizform/"
+                      to="create/"
                     >
                       Create a Quiz
                     </Button>

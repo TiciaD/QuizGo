@@ -79,13 +79,14 @@ export default function Profile() {
                   </Card.Title>
                   <Col className="m-2 py-3 text-muted fs-3 mb-3">
                     No saved quizzes
+                    {console.log(userData)}
                   </Col>
                   <Col className="m-2">
                     <Button
                       className="fw-bold border-3 rounded-pill fs-2 px-5 mb-3"
                       variant="outline-primary"
                       size="lg"
-                      onClick={() => navigate("/quizform")}
+                      onClick={() => navigate("/create")}
                     >
                       Create a Quiz
                     </Button>

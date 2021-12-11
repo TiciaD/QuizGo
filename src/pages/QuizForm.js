@@ -14,21 +14,19 @@ import authContext from "../utilities/auth-context";
 import "./QuizForm.css";
 
 export default function QuizForm() {
+  const [errors, setErrors] = useState(false);
   const {
     allQuestions,
-    setAllQuestions,
+    quizName,
+    handleReset,
     userQuestions,
     setUserQuestions,
-    userOptions,
-    setUserOptions,
     setUserCategory,
     setUserDifficulty,
     userDifficulty,
     userCategory,
     makeQuiz,
   } = useContext(userQuizContext);
-
-  const [name, setName] = useState("Quiz");
 
   const { token } = useContext(authContext);
 
@@ -38,41 +36,28 @@ export default function QuizForm() {
       [field]: value,
     });
     console.log(userQuestions);
-    // Check and see if errors exist, and remove them from the error object:
-    // if (!!errors[field])
-    //   setErrors({
-    //     ...errors,
-    //     [field]: null,
-    //   });
   };
 
   const handleAddQuestion = () => {
-    // stringify all options
-    let allOptions = `${userQuestions.correct_answer}|${userQuestions.possible_answer1}|${userQuestions.possible_answer2}|${userQuestions.possible_answer3}`;
-    setUserOptions(allOptions);
-    console.log(userOptions);
-
-    setAllQuestions(userQuestions);
-    console.log({ QuestionsArr: allQuestions });
-
-    // clear question field
-    Array.from(document.querySelectorAll("input")).forEach(
-      (input) => (input.value = "")
-    );
-
-    // axios POST, send question to database
-    console.log(userQuestions);
-
-    // reset user questions state
-    setUserQuestions("");
-    console.log(userQuestions);
+    if (
+      !userQuestions.question ||
+      !userQuestions.correct_answer ||
+      !userQuestions.possible_answer1 ||
+      !userQuestions.possible_answer2 ||
+      !userQuestions.possible_answer3
+    ) {
+      setErrors(true);
+    } else {
+      setErrors(false);
+      handleReset(userQuestions, allQuestions);
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(allQuestions);
     let myToken = token;
-    makeQuiz(allQuestions, userDifficulty, userCategory, name, myToken);
+    makeQuiz(allQuestions, userDifficulty, userCategory, quizName, myToken);
   };
 
   return (
@@ -84,7 +69,9 @@ export default function QuizForm() {
               <Card.Body className="mb-3">
                 <Card.Title className="text-primary fw-bold fs-1 pt-2 pb-3">
                   Quiz Creator
+                  <br />
                 </Card.Title>
+                <Col className="fs-2 mx-3 mb-3">{quizName}</Col>
                 <Container>
                   <Form
                     noValidate
@@ -138,33 +125,18 @@ export default function QuizForm() {
                       </Form.Group>
                     </Row>
                     <hr />
-                    <Row>
+                    <Row className="d-flex flex-column g-2 align-items-center">
                       <Col>Total Questions: {allQuestions.length}</Col>
+                      {errors && (
+                        <Col
+                          md={6}
+                          className="px-2 py-1 fs-4 rounded bg-danger text-white mb-2"
+                        >
+                          Please Fill in All Fields
+                        </Col>
+                      )}
                     </Row>
                     <Row className="justify-content-center p-2 text-muted">
-                      <Form.Group
-                        as={Col}
-                        lg="8"
-                        controlId="validationCustomQuestion"
-                        className="mb-3"
-                      >
-                        <FloatingLabel
-                          controlId="floatingInput"
-                          label="Quiz Name"
-                          className="mb-3"
-                        >
-                          <Form.Control
-                            required
-                            type="text"
-                            placeholder="Enter Question"
-                            onChange={(e) => setName("name", e.target.value)}
-                            //   isInvalid={!!errors.email}
-                          />
-                        </FloatingLabel>
-                        <Form.Control.Feedback type="invalid">
-                          {/* {errors.email} */}
-                        </Form.Control.Feedback>
-                      </Form.Group>
                       <Form.Group
                         as={Col}
                         lg="8"
@@ -184,11 +156,11 @@ export default function QuizForm() {
                             onChange={(e) =>
                               setField("question", e.target.value)
                             }
-                            //   isInvalid={!!errors.email}
+                            isInvalid={!!errors.question}
                           />
                         </FloatingLabel>
                         <Form.Control.Feedback type="invalid">
-                          {/* {errors.email} */}
+                          {errors.question}
                         </Form.Control.Feedback>
                       </Form.Group>
                       <Form.Group
@@ -209,11 +181,11 @@ export default function QuizForm() {
                             onChange={(e) =>
                               setField("correct_answer", e.target.value)
                             }
-                            //   isInvalid={!!errors.email}
+                            isInvalid={!!errors.question}
                           />
                         </FloatingLabel>
                         <Form.Control.Feedback type="invalid">
-                          {/* {errors.email} */}
+                          {errors.question}
                         </Form.Control.Feedback>
                       </Form.Group>
                       <Form.Group
@@ -234,11 +206,11 @@ export default function QuizForm() {
                             onChange={(e) =>
                               setField("possible_answer1", e.target.value)
                             }
-                            //   isInvalid={!!errors.email}
+                            isInvalid={!!errors.question}
                           />
                         </FloatingLabel>
                         <Form.Control.Feedback type="invalid">
-                          {/* {errors.email} */}
+                          {errors.question}
                         </Form.Control.Feedback>
                       </Form.Group>
                       <Form.Group
@@ -259,11 +231,11 @@ export default function QuizForm() {
                             onChange={(e) =>
                               setField("possible_answer2", e.target.value)
                             }
-                            //   isInvalid={!!errors.email}
+                            isInvalid={!!errors.question}
                           />
                         </FloatingLabel>
                         <Form.Control.Feedback type="invalid">
-                          {/* {errors.email} */}
+                          {errors.question}
                         </Form.Control.Feedback>
                       </Form.Group>
                       <Form.Group
@@ -284,11 +256,11 @@ export default function QuizForm() {
                             onChange={(e) =>
                               setField("possible_answer3", e.target.value)
                             }
-                            //   isInvalid={!!errors.email}
+                            isInvalid={!!errors.question}
                           />
                         </FloatingLabel>
                         <Form.Control.Feedback type="invalid">
-                          {/* {errors.email} */}
+                          {errors.question}
                         </Form.Control.Feedback>
                       </Form.Group>
                     </Row>

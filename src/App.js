@@ -10,6 +10,7 @@ import {
   Result,
   Login,
   QuizForm,
+  CreatePage,
 } from "./pages";
 import { MyNavBar } from "./components";
 import QuizState from "./utilities/QuizState";
@@ -31,6 +32,7 @@ function App() {
               <Route path="quiz/*" element={<Quiz />} />
               <Route path="result/*" element={<Result />} />
               <Route path="quizform/*" element={<QuizForm />} />
+              <Route path="create/*" element={<CreatePage />} />
             </Routes>
             <MyNavBar />
           </QuizState>
