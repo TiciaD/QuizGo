@@ -1,11 +1,11 @@
-import { AUTHORIZE, USER_DATA, TOKEN } from "./actions";
+import { USER_QUIZZES, USER_DATA, TOKEN } from "./actions";
 
 const authReducer = (state, action) => {
   switch (action.type) {
     case USER_DATA:
       return { ...state, userData: action.payload };
-    case AUTHORIZE:
-      return { ...state, isAuth: action.payload };
+    case USER_QUIZZES:
+      return { ...state, userQuizzes: action.payload };
     case TOKEN:
       return { ...state, token: action.payload };
     default:

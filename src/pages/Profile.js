@@ -1,16 +1,33 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Button, Card, Container, Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import authContext from "../utilities/auth-context";
 import "./Profile.css";
 
 export default function Profile() {
-  const { token, userData, destroyToken } = useContext(authContext);
+  const {
+    token,
+    userData,
+    destroyToken,
+    userQuizzes,
+    getUserQuizzes,
+    getUserData,
+  } = useContext(authContext);
+
   const navigate = useNavigate();
+
   const handleLogout = () => {
     destroyToken();
     navigate("/login");
   };
+
+  useEffect(() => {
+    let userToken = window.localStorage.getItem("token");
+    if (userToken) {
+      getUserData();
+      getUserQuizzes();
+    }
+  }, [token]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="Profile-page">
@@ -79,7 +96,9 @@ export default function Profile() {
                   </Card.Title>
                   <Col className="m-2 py-3 text-muted fs-3 mb-3">
                     No saved quizzes
-                    {console.log(userData)}
+                    {userQuizzes.map((quiz, i) => {
+                      return quiz.categories.category.type;
+                    })}
                   </Col>
                   <Col className="m-2">
                     <Button

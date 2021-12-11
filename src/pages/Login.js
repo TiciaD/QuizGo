@@ -8,8 +8,7 @@ function Login() {
   const [loginForm, setLoginForm] = useState({});
   const [errors, setErrors] = useState({});
 
-  const { token, setToken, login, setAuth, getUserData } =
-    useContext(AuthContext);
+  const { token, setToken, login, getUserData } = useContext(AuthContext);
 
   const getUser = (email, pass) => {
     const data = {
@@ -28,7 +27,6 @@ function Login() {
     if (userToken) {
       setToken(userToken);
       getUserData({ token: userToken });
-      setAuth(true);
       navigate("/");
     }
   }, [token]); // eslint-disable-line react-hooks/exhaustive-deps

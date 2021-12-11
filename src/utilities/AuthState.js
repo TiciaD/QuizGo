@@ -25,7 +25,7 @@ const AuthState = (props) => {
   };
 
   const setUserQuizzes = (data) => {
-    console.log({setQuiz: data});
+    console.log({ setQuiz: data });
     dispatch({
       type: USER_QUIZZES,
       payload: data,
@@ -77,12 +77,12 @@ const AuthState = (props) => {
     }
   };
 
-  const getUserQuizzes = () => {
+  const getUserQuizzes = async () => {
     if ("token" in localStorage) {
       const value = localStorage.getItem("token");
       setToken(value);
 
-      axios
+      await axios
         .get(
           "https://react-laravel-container-dunnticia63358301.codeanyapp.com/api/quizzes",
           {
@@ -92,8 +92,8 @@ const AuthState = (props) => {
           }
         )
         .then(function (response) {
-          //   console.log(response.data.data.user_data);
-          setUserQuizzes(response.data.data.user_data);
+          console.log(response.data.data);
+          setUserQuizzes(response.data.data);
         })
         .catch(function (error) {
           console.log(error);
