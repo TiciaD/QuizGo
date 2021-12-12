@@ -37,7 +37,6 @@ export default function QuizForm() {
       ...userQuestions,
       [field]: value,
     });
-    console.log(userQuestions);
   };
 
   const handleAddQuestion = () => {
@@ -93,7 +92,6 @@ export default function QuizForm() {
                           className="me-sm-2"
                           id="inlineFormCustomSelectCategory"
                           onChange={(e) => {
-                            console.log(e.target.value);
                             setUserCategory(e.target.value);
                           }}
                         >
