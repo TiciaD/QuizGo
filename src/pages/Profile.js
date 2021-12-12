@@ -2,11 +2,23 @@ import React, { useContext, useEffect } from "react";
 import { Button, Card, Container, Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import authContext from "../utilities/auth-context";
+import quizContext from "../utilities/quiz-context";
 import "./Profile.css";
 
 export default function Profile() {
-  const { token, userData, destroyToken, userQuizzes, getUserQuizzes } =
-    useContext(authContext);
+  const {
+    token,
+    setToken,
+    getUserData,
+    userData,
+    setUserData,
+    destroyToken,
+    userQuizzes,
+    getUserQuizzes,
+  } = useContext(authContext);
+
+  const { questions, setQuestions, setCurrentQuestion, setScore } =
+    useContext(quizContext);
 
   const navigate = useNavigate();
 
@@ -16,8 +28,38 @@ export default function Profile() {
   };
 
   useEffect(() => {
+    if ("token" in localStorage) {
+      const value = localStorage.getItem("token");
+      setToken(value);
+    }
+    if (!userData) {
+      getUserData();
+    } else {
+      const user = JSON.parse(localStorage.getItem("User"));
+      setUserData(user);
+    }
     getUserQuizzes();
-  }, []);
+  }, [userQuizzes.length]);
+
+  const setUserQuiz = (index) => {
+    // console.log({
+    //   question: userQuizzes[index].questions[currQuestion].question.question,
+    // });
+    // console.log({ setQuestions: userQuizzes[index].questions });
+    // console.log(
+    //   ...userQuizzes[index].questions[0].question.possible_answers.split("|")
+    // );
+    // console.log(
+    //   questions[currQuestion]?.correct_answer ||
+    //     userQuizzes[index].questions[0].question.correct_answer
+    // );
+    setQuestions("");
+    setScore(0);
+    setCurrentQuestion(0);
+    setQuestions(userQuizzes[index].questions);
+    navigate("/quiz");
+    console.log({ questions: questions });
+  };
 
   return (
     <div className="Profile-page">
@@ -110,6 +152,7 @@ export default function Profile() {
                                   <Button
                                     variant="primary"
                                     className="fw-bold border-3 rounded-pill px-3"
+                                    onClick={() => setUserQuiz(i)}
                                   >
                                     Play Quiz
                                   </Button>

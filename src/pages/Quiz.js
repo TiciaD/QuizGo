@@ -17,13 +17,22 @@ export default function Quiz() {
 
   useEffect(() => {
     console.log({ QuizQuestions: questions });
-    setOptions(
-      questions &&
-        handleShuffle([
-          questions[currQuestion]?.correct_answer,
-          ...questions[currQuestion]?.incorrect_answers,
-        ])
-    );
+    if (questions) {
+      if (questions[currQuestion].question.question) {
+        setOptions(
+          handleShuffle(
+            questions[currQuestion].question.possible_answers.split("|")
+          )
+        );
+      } else {
+        setOptions(
+          handleShuffle([
+            questions[currQuestion]?.correct_answer,
+            ...questions[currQuestion]?.incorrect_answers,
+          ])
+        );
+      }
+    }
   }, [questions, currQuestion]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const current = currQuestion + 1;

@@ -17,7 +17,7 @@ import quizReducer from "./quiz-reducer";
 
 const QuizState = (props) => {
   const initialState = {
-    questions: "",
+    questions: [],
     score: 0,
     toggledItem: "",
     category: "",

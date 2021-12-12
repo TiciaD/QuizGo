@@ -23,8 +23,12 @@ const Question = () => {
     return atob(data);
   };
 
-  const question = questions[currQuestion]?.question;
-  const correct = questions[currQuestion]?.correct_answer;
+  const question =
+    questions[currQuestion].question.question ||
+    questions[currQuestion]?.question;
+  const correct =
+    questions[currQuestion]?.correct_answer ||
+    questions[currQuestion].question.correct_answer;
   const totalQues = questions?.length;
   const current = currQuestion + 1;
 
@@ -61,11 +65,13 @@ const Question = () => {
     <div>
       <h1 className="text-primary fw-bold fs-2 pt-4">
         {/* {console.log(questions[currQuestion].correct_answer)} */}
-        {console.log(decode(question))}
+        {/* {console.log(decode(question))} */}
         {/* {console.log({ currentQuestion: currQuestion })} */}
         {/* {console.log({ current: current })} */}
         {/* {console.log({ total: totalQues })} */}
-        {decode(question)}
+        {questions[currQuestion]?.question.question
+          ? question
+          : decode(question)}
       </h1>
       <Container className="mt-4">
         {selectError && (
@@ -93,7 +99,7 @@ const Question = () => {
                   disabled={selectedItem}
                   onClick={() => handleChecked(i)}
                 >
-                  {decode(i)}
+                  {questions[currQuestion]?.question.question ? i : decode(i)}
                   {/* {console.log({ questionsArr: questions.length })} */}
                 </Button>
               </Col>
