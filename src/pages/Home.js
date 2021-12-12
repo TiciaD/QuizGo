@@ -2,29 +2,30 @@ import React, { useContext, useEffect } from "react";
 import { Button, Card, Container, Row, Col } from "react-bootstrap";
 import quizContext from "../utilities/quiz-context";
 import authContext from "../utilities/auth-context";
+import userQuizContext from "../utilities/user-quiz-context";
 import { Link } from "react-router-dom";
 import "./Home.css";
 
 function Home() {
-  const {
-    setQuestions,
-    setScore,
-    setCurrentQuestion,
-    setAmount,
-    setDifficulty,
-    setType,
-  } = useContext(quizContext);
+  const { resetQuickPlay } = useContext(quizContext);
+  const { resetAll } = useContext(userQuizContext);
 
-  const { token, getUserData, userData } = useContext(authContext);
+  const { token, setToken, getUserData, userData, setUserData } =
+    useContext(authContext);
 
   useEffect(() => {
-    getUserData();
-    setQuestions("");
-    setCurrentQuestion(0);
-    setScore(0);
-    setAmount(5);
-    setDifficulty("easy");
-    setType("multiple");
+    if ("token" in localStorage) {
+      const value = localStorage.getItem("token");
+      setToken(value);
+    }
+    if (!userData) {
+      getUserData();
+    } else {
+      const user = JSON.parse(localStorage.getItem("User"));
+      setUserData(user);
+    }
+    resetAll();
+    resetQuickPlay();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (

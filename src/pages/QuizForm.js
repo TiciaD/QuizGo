@@ -8,6 +8,7 @@ import {
   Button,
   FloatingLabel,
 } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import { Categories } from "../components";
 import userQuizContext from "../utilities/user-quiz-context";
 import authContext from "../utilities/auth-context";
@@ -29,6 +30,7 @@ export default function QuizForm() {
   } = useContext(userQuizContext);
 
   const { token } = useContext(authContext);
+  const navigate = useNavigate();
 
   const setField = (field, value) => {
     setUserQuestions({
@@ -58,6 +60,7 @@ export default function QuizForm() {
     console.log(allQuestions);
     let myToken = token;
     makeQuiz(allQuestions, userDifficulty, userCategory, quizName, myToken);
+    navigate("/");
   };
 
   return (

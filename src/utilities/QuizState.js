@@ -27,7 +27,6 @@ const QuizState = (props) => {
     error: "",
     currQuestion: 0,
     options: "",
-    loading: false,
   };
   const [state, dispatch] = useReducer(quizReducer, initialState);
 
@@ -123,6 +122,15 @@ const QuizState = (props) => {
     return answers.sort(() => Math.random() - 0.5);
   };
 
+  const resetQuickPlay = () => {
+    setQuestions("");
+    setCurrentQuestion(0);
+    setScore(0);
+    setAmount(5);
+    setDifficulty("easy");
+    setType("multiple");
+  };
+
   return (
     // Send down props to everything wrapped in QuizState
     <QuizContext.Provider
@@ -149,7 +157,7 @@ const QuizState = (props) => {
         options: state.options,
         setOptions,
         handleShuffle,
-        loading: state.loading,
+        resetQuickPlay,
       }}
     >
       {props.children}

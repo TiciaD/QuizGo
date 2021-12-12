@@ -6,6 +6,7 @@ import {
   ADD_USER_CAT,
   ADD_USER_DIF,
   ADD_NAME,
+  RESET_ALL_QUES,
 } from "./actions";
 import axiosHelper from "./axiosHelper";
 import UserQuizContext from "./user-quiz-context";
@@ -19,9 +20,6 @@ const UserQuizState = (props) => {
     userDifficulty: 1,
     userType: "multiple",
     quizName: "",
-    error: "",
-    currQuestion: 0,
-    userOptions: "",
   };
   const [state, dispatch] = useReducer(userQuizReducer, initialState);
 
@@ -66,6 +64,16 @@ const UserQuizState = (props) => {
       type: ADD_ALL_QUES,
       payload: arr,
     });
+  };
+
+  const resetAll = () => {
+    dispatch({
+      type: RESET_ALL_QUES,
+    });
+    setUserQuestions("");
+    setUserDifficulty(1);
+    setUserCategory(1);
+    setQuizName("");
   };
 
   const saveQuiz = (res) => {
@@ -133,6 +141,7 @@ const UserQuizState = (props) => {
         setQuizName,
         makeQuiz,
         handleReset,
+        resetAll,
       }}
     >
       {props.children}

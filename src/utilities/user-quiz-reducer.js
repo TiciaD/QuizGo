@@ -4,6 +4,7 @@ import {
   ADD_USER_CAT,
   ADD_USER_DIF,
   ADD_ALL_QUES,
+  RESET_ALL_QUES,
 } from "./actions";
 
 const userQuizReducer = (state, action) => {
@@ -21,6 +22,8 @@ const userQuizReducer = (state, action) => {
       };
     case ADD_USER_DIF:
       return { ...state, userDifficulty: action.payload };
+    case RESET_ALL_QUES:
+      return { ...state, allQuestions: [] };
     default:
       return state;
   }

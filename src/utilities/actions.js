@@ -22,4 +22,5 @@ export const ADD_CORRECT = "ADD_CORRECT";
 export const ADD_USER_CAT = "ADD_USER_CAT";
 export const ADD_USER_DIF = "ADD_USER_DIF";
 export const ADD_ALL_QUES = "ADD_ALL_QUES";
+export const RESET_ALL_QUES = "RESET_ALL_QUES";
 export const ADD_NAME = "ADD_NAME";

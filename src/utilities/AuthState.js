@@ -6,7 +6,7 @@ import axiosHelper from "./axiosHelper";
 import { USER_QUIZZES, TOKEN, USER_DATA } from "./actions";
 
 const AuthState = (props) => {
-  const initialState = { userQuizzes: {}, token: "", userData: {} };
+  const initialState = { userQuizzes: [], token: "", userData: {} };
   const [state, dispatch] = useReducer(authReducer, initialState);
 
   const setToken = (value) => {
@@ -53,12 +53,12 @@ const AuthState = (props) => {
     });
   };
 
-  const getUserData = () => {
+  const getUserData = async () => {
     if ("token" in localStorage) {
       const value = localStorage.getItem("token");
       setToken(value);
 
-      axios
+      await axios
         .get(
           "https://react-laravel-container-dunnticia63358301.codeanyapp.com/api/user",
           {
@@ -68,8 +68,9 @@ const AuthState = (props) => {
           }
         )
         .then(function (response) {
-          //   console.log(response.data.data.user_data);
+          let user = response.data.data.user_data;
           setUserData(response.data.data.user_data);
+          window.localStorage.setItem("User", JSON.stringify(user));
         })
         .catch(function (error) {
           console.log(error);
@@ -92,7 +93,7 @@ const AuthState = (props) => {
           }
         )
         .then(function (response) {
-          console.log(response.data.data);
+          console.log({ QuizResponse: response.data.data });
           setUserQuizzes(response.data.data);
         })
         .catch(function (error) {
