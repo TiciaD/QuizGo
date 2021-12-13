@@ -68,7 +68,7 @@ function Home() {
               ) : (
                 <>
                   <Col md={12} className="mt-4 fs-1 text-primary">
-                    Welcome {userData.username}!
+                    Welcome {userData?.username}!
                   </Col>
                   <Col md={12} className="mt-3">
                     <Button

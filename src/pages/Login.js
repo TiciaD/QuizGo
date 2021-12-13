@@ -16,7 +16,7 @@ function Login() {
       password: pass,
       grant_type: "password",
       client_id: 2,
-      client_secret: "7pGSAbwdNf0E7G889vYrhRVKRRlaIduqqpiHoZG9",
+      client_secret: "KlYZGGIRAF0vGTef2Kll4Xts73djeriBAT4VKYUP",
       scope: "",
     };
     login(data);

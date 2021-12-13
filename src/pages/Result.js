@@ -36,8 +36,8 @@ const Result = () => {
                 {!token && (
                   <>
                     <Col className="fs-3 mx-3 mb-3">
-                      Sign Up to save your score, create your own quizzes,
-                      access extra categories and more!
+                      Sign Up to create your own quizzes, access extra
+                      categories, play other's quizzes and more!
                     </Col>
                     <Col className="m-2">
                       <Button

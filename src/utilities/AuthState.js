@@ -66,6 +66,15 @@ const AuthState = (props) => {
     });
   };
 
+  const register = (userData) => {
+    axiosHelper({
+      data: userData,
+      method: "post",
+      url: "/register",
+      successMethod: saveToken,
+    });
+  };
+
   const handleShuffle = (answers) => {
     return answers.sort(() => Math.random() - 0.5);
   };
@@ -155,6 +164,7 @@ const AuthState = (props) => {
         getUserQuizzes,
         saveToken,
         login,
+        register,
         destroyToken,
         getUserData,
         allQuizzes: state.allQuizzes,

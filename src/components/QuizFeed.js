@@ -9,9 +9,18 @@ import "./QuizFeed.css";
 
 function QuizFeed() {
   const { getAllQuizzes, allQuizzes } = useContext(authContext);
-  const { setQuestions } = useContext(quizContext);
+  const { setQuestions, handleShuffle } = useContext(quizContext);
 
   const navigate = useNavigate();
+
+  const colors = ["bg-danger", "bg-info", "bg-success", "bg-warning"];
+
+  //   const randColor = () => {
+  //     handleShuffle(colors);
+  //     console.log(colors[0]);
+  //     let newColor = colors[0];
+  //     return newColor;
+  //   };
 
   useEffect(() => {
     getAllQuizzes();
@@ -26,7 +35,7 @@ function QuizFeed() {
     <Container className="mb-5">
       <Row>
         <Col className="Pick-title text-light display-5 fw-bold mb-5">
-          Top Picks
+          Top User Quizzes
         </Col>
       </Row>
       <Row className="d-flex justify-content-evenly g-5">
@@ -38,10 +47,10 @@ function QuizFeed() {
               .map((quiz, i) => {
                 return (
                   <Col key={i} md={5}>
-                    <Card className="quiz-Card rounded-0">
+                    <Card className={`quiz-Card rounded-0 bg-info`}>
                       <Container className="quiz-Container">
                         <Row className="justify-content-center mt-2">
-                          <Col className="card-title text-light fs-2" xs={10}>
+                          <Col className="card-title text-light fs-2" xs={12}>
                             <u>{quiz.name}</u>
                             <br />
                             <span className="fs-4">
