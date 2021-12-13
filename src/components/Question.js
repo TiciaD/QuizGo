@@ -18,8 +18,18 @@ const Question = () => {
 
   const navigate = useNavigate();
 
-  const correct = questions[currQuestion].correct_answer;
-  const totalQues = questions.length - 1;
+  const decode = (data) => {
+    console.log({ data: data });
+    return atob(data);
+  };
+
+  const question =
+    questions[currQuestion].question.question ||
+    questions[currQuestion]?.question;
+  const correct =
+    questions[currQuestion]?.correct_answer ||
+    questions[currQuestion].question.correct_answer;
+  const totalQues = questions?.length;
   const current = currQuestion + 1;
 
   const handleSelected = (i) => {
@@ -33,7 +43,7 @@ const Question = () => {
   };
 
   const handleChecked = (i) => {
-    console.log(selectedItem);
+    console.log({ selected: selectedItem });
     setSelected(i);
     if (i === correct) {
       setScore(score + 1);
@@ -42,7 +52,7 @@ const Question = () => {
   };
 
   const handleNext = () => {
-    if (current > totalQues) {
+    if (current === totalQues && selectedItem) {
       navigate("/result");
     } else if (selectedItem) {
       setCurrentQuestion(currQuestion + 1);
@@ -54,9 +64,14 @@ const Question = () => {
   return (
     <div>
       <h1 className="text-primary fw-bold fs-2 pt-4">
-        {console.log(questions[currQuestion].correct_answer)}
-        {console.log(options)}
-        {questions[currQuestion].question}
+        {/* {console.log(questions[currQuestion].correct_answer)} */}
+        {/* {console.log(decode(question))} */}
+        {/* {console.log({ currentQuestion: currQuestion })} */}
+        {/* {console.log({ current: current })} */}
+        {/* {console.log({ total: totalQues })} */}
+        {questions[currQuestion]?.question.question
+          ? question
+          : decode(question)}
       </h1>
       <Container className="mt-4">
         {selectError && (
@@ -81,13 +96,11 @@ const Question = () => {
                     selectedItem && handleSelected(i)
                   }`}
                   variant="outline-primary"
-                  //   checked={checked}
                   disabled={selectedItem}
-                  //   onChange={(e) => setSelectedItem(e.currentTarget.checked)}
                   onClick={() => handleChecked(i)}
                 >
-                  {i}
-                  {console.log({ questionsArr: questions.length })}
+                  {questions[currQuestion]?.question.question ? i : decode(i)}
+                  {/* {console.log({ questionsArr: questions.length })} */}
                 </Button>
               </Col>
             ))}

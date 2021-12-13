@@ -7,7 +7,7 @@ const AnonCategories = [
   { category: "Science", value: 17 },
   { category: "Sports", value: 21 },
   { category: "History", value: 23 },
-  { category: "Art", value: 25 },
+  { category: "Computers", value: 18 },
 ];
 
 export default AnonCategories;

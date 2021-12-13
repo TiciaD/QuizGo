@@ -6,24 +6,27 @@ import {
   TOGGLE_BUTTON,
   CATEGORY,
   DIFFICULTY,
+  TYPE,
+  AMOUNT,
   ERROR,
   OPTIONS,
   CURRENT_QUESTION,
-} from "./quiz-actions";
+} from "./actions";
 import QuizContext from "./quiz-context";
 import quizReducer from "./quiz-reducer";
 
 const QuizState = (props) => {
   const initialState = {
-    questions: "",
+    questions: [],
     score: 0,
     toggledItem: "",
     category: "",
     difficulty: "easy",
+    type: "multiple",
+    amount: 5,
     error: "",
     currQuestion: 0,
     options: "",
-    loading: false,
   };
   const [state, dispatch] = useReducer(quizReducer, initialState);
 
@@ -35,14 +38,19 @@ const QuizState = (props) => {
     });
   };
 
-  const fetchQuestions = async (category = "", difficulty = "") => {
-    const { data } = await axios.get(
-      `https://opentdb.com/api.php?amount=10${
-        category && `&category=${category}`
-      }${difficulty && `&difficulty=${difficulty}`}&type=multiple`
-    );
-    setQuestions(data.results);
-    console.log(data.results);
+  // fetch quiz questions from opentdb based on state of category, difficulty, type, and amount of questions
+  const fetchQuestions = async (category, difficulty, amount, type) => {
+    await axios
+      .get(
+        `https://opentdb.com/api.php?amount=${amount}&category=${category}&difficulty=${difficulty}&type=${type}&encode=base64`
+      )
+      .then(function (res) {
+        setQuestions(res.data.results);
+        console.log({ Result: res.data.results });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   const setScore = (int) => {
@@ -74,6 +82,20 @@ const QuizState = (props) => {
     });
   };
 
+  const setType = (value) => {
+    dispatch({
+      type: TYPE,
+      payload: value,
+    });
+  };
+
+  const setAmount = (value) => {
+    dispatch({
+      type: AMOUNT,
+      payload: value,
+    });
+  };
+
   const setError = (bool) => {
     dispatch({
       type: ERROR,
@@ -95,11 +117,22 @@ const QuizState = (props) => {
     });
   };
 
+  // takes an array and shuffles order of elements in the array
   const handleShuffle = (answers) => {
     return answers.sort(() => Math.random() - 0.5);
   };
 
+  const resetQuickPlay = () => {
+    setQuestions("");
+    setCurrentQuestion(0);
+    setScore(0);
+    setAmount(5);
+    setDifficulty("easy");
+    setType("multiple");
+  };
+
   return (
+    // Send down props to everything wrapped in QuizState
     <QuizContext.Provider
       value={{
         questions: state.questions,
@@ -113,6 +146,10 @@ const QuizState = (props) => {
         setCategory,
         difficulty: state.difficulty,
         setDifficulty,
+        type: state.type,
+        setType,
+        amount: state.amount,
+        setAmount,
         error: state.error,
         setError,
         currQuestion: state.currQuestion,
@@ -120,7 +157,7 @@ const QuizState = (props) => {
         options: state.options,
         setOptions,
         handleShuffle,
-        loading: state.loading,
+        resetQuickPlay,
       }}
     >
       {props.children}

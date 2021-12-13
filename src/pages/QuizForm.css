@@ -9,15 +9,15 @@
   text-shadow: -8px 9px 0px rgba(0, 0, 0, 0.6);
 }
 
-.Result-page {
-  height: calc(100vh - 72px);
+.Form-page {
+  /* height: calc(100vh - 72px); */
   display: flex;
   flex-direction: column;
   justify-content: center;
   overflow: auto;
 }
 
-.result-container {
-  margin-top: 4rem;
+.form-container {
+  margin-top: 5rem;
   margin-bottom: 3rem;
 }
