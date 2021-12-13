@@ -10,7 +10,7 @@
 }
 
 .Home-page {
-  height: calc(100vh - 72px);
+  /* height: calc(100vh - 72px); */
   display: flex;
   flex-direction: column;
   justify-content: center;

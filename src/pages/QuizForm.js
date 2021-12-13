@@ -56,10 +56,14 @@ export default function QuizForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(allQuestions);
-    let myToken = token;
-    makeQuiz(allQuestions, userDifficulty, userCategory, quizName, myToken);
-    navigate("/");
+    if (allQuestions.length === 0) {
+      setErrors(true);
+    } else {
+      console.log(allQuestions);
+      let myToken = token;
+      makeQuiz(allQuestions, userDifficulty, userCategory, quizName, myToken);
+      navigate("/");
+    }
   };
 
   return (
@@ -73,7 +77,9 @@ export default function QuizForm() {
                   Quiz Creator
                   <br />
                 </Card.Title>
-                <Col className="fs-2 mx-3 mb-3">{quizName}</Col>
+                <Col className="text-primary fs-2 mx-3 mb-3 text-decoration-underline">
+                  "{quizName}"
+                </Col>
                 <Container>
                   <Form
                     noValidate
@@ -133,7 +139,8 @@ export default function QuizForm() {
                           md={6}
                           className="px-2 py-1 fs-4 rounded bg-danger text-white mb-2"
                         >
-                          Please Fill in All Fields
+                          Please Fill in All Fields and Add at least one
+                          Question
                         </Col>
                       )}
                     </Row>

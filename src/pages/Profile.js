@@ -39,7 +39,7 @@ export default function Profile() {
       setUserData(user);
     }
     getUserQuizzes();
-  }, [userQuizzes.length]);
+  }, [userQuizzes.length]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const setUserQuiz = (index) => {
     // console.log({
@@ -133,7 +133,7 @@ export default function Profile() {
                         return (
                           <Card
                             border="primary"
-                            className="userQuiz-card shadow-sm mb-3"
+                            className="userQuiz-card mb-3"
                             key={i}
                           >
                             <Card.Body>
@@ -170,7 +170,7 @@ export default function Profile() {
                   )}
                   <Col className="m-2">
                     <Button
-                      className="fw-bold border-3 rounded-pill fs-2 px-5 mb-3"
+                      className="fw-bold border-3 rounded-pill fs-2 px-5 mb-3 mt-2"
                       variant="outline-primary"
                       size="lg"
                       onClick={() => navigate("/create")}

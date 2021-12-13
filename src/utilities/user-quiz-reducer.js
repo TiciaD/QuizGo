@@ -5,6 +5,7 @@ import {
   ADD_USER_DIF,
   ADD_ALL_QUES,
   RESET_ALL_QUES,
+  SHOW_MODAL,
 } from "./actions";
 
 const userQuizReducer = (state, action) => {
@@ -24,6 +25,8 @@ const userQuizReducer = (state, action) => {
       return { ...state, userDifficulty: action.payload };
     case RESET_ALL_QUES:
       return { ...state, allQuestions: [] };
+    case SHOW_MODAL:
+      return { ...state, showModal: action.payload };
     default:
       return state;
   }

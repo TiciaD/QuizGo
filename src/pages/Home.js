@@ -3,6 +3,7 @@ import { Button, Card, Container, Row, Col } from "react-bootstrap";
 import quizContext from "../utilities/quiz-context";
 import authContext from "../utilities/auth-context";
 import userQuizContext from "../utilities/user-quiz-context";
+import { QuizFeed } from "../components";
 import { Link } from "react-router-dom";
 import "./Home.css";
 
@@ -108,6 +109,8 @@ function Home() {
           </Col>
         </Row>
       </Container>
+
+      {token && <QuizFeed />}
     </div>
   );
 }

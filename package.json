@@ -41,5 +41,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@iconify/icons-fluent": "^1.1.33",
+    "@iconify/react": "^3.1.0"
   }
 }

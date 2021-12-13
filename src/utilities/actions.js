@@ -14,6 +14,7 @@ export const OPTIONS = "OPTIONS";
 export const USER_QUIZZES = "USER_QUIZZES";
 export const TOKEN = "TOKEN";
 export const USER_DATA = "USER_DATA";
+export const ALL_QUIZZES = "ALL_QUIZZES";
 
 // User Quiz State
 export const ADD_USER_QUES = "ADD_USER_QUES";
@@ -24,3 +25,4 @@ export const ADD_USER_DIF = "ADD_USER_DIF";
 export const ADD_ALL_QUES = "ADD_ALL_QUES";
 export const RESET_ALL_QUES = "RESET_ALL_QUES";
 export const ADD_NAME = "ADD_NAME";
+export const SHOW_MODAL = "SHOW_MODAL";
