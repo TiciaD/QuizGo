@@ -10,3 +10,8 @@ Trivia app that contains random topics of trivia but also allows the user to cre
 
 ## Integrations
 opentdb will be called when a user presses QuickPlay and inputs their options, to give the user a completely randomly generated quiz at least based on category each time.
+
+## Notes
+SignUp currently not functioning, use a registered user to see login features
+ - username: dary
+ - password: changeme
