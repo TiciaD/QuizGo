@@ -13,5 +13,5 @@ opentdb will be called when a user presses QuickPlay and inputs their options, t
 
 ## Notes
 SignUp currently not functioning, use a registered user to see login features
- - username: dary
+ - username: info@darynazar.com
  - password: changeme
